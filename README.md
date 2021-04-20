@@ -1,2 +1,2 @@
 # Fittnessstudio-Rechnung-Tool
-Eine Rechnungs Anwendung test Commit
+Eine Rechnungs Anwendung
