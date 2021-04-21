@@ -16,10 +16,10 @@
    <children>
       <AnchorPane prefHeight="560.0" prefWidth="215.0">
          <children>
-            <Label layoutX="13.0" layoutY="10.0" prefHeight="21.0" prefWidth="54.0" text="Kunde:" />
-            <TextField layoutX="7.0" layoutY="31.0" style="-fx-background-color: #F2F2F2;" />
-            <ListView layoutX="10.0" layoutY="64.0" prefHeight="482.0" prefWidth="185.0" style="-fx-background-color: #F2F2F2;" />
-            <ImageView fitHeight="32.0" fitWidth="39.0" layoutX="159.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+            <Label fx:id="label_kunde" layoutX="13.0" layoutY="10.0" prefHeight="21.0" prefWidth="54.0" text="Kunde:" />
+            <TextField fx:id="textfield_sucheingabe" layoutX="7.0" layoutY="31.0" style="-fx-background-color: #F2F2F2;" />
+            <ListView fx:id="listview_rechnungsbrowser" layoutX="10.0" layoutY="64.0" prefHeight="482.0" prefWidth="185.0" style="-fx-background-color: #F2F2F2;" />
+            <ImageView fx:id="imageview_suchicon" fitHeight="32.0" fitWidth="39.0" layoutX="159.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@suche.PNG" />
                </image>
@@ -43,23 +43,23 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Details" underline="true" />
-                  <Label text="Kundennummer:" GridPane.rowIndex="1" />
-                  <Label text="Rechnungssumme" GridPane.rowIndex="2" />
-                  <Label text="Rechnungsnummer" GridPane.rowIndex="3" />
-                  <Label text="Status" GridPane.rowIndex="4" />
-                  <Label text="Datum" GridPane.rowIndex="5" />
-                  <Label text="Zahlungsfrist" GridPane.rowIndex="6" />
-                  <TextField style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <TextField style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <TextField style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Label fx:id="label_details" text="Details" underline="true" />
+                  <Label fx:id="label_kundennummer" text="Kundennummer:" GridPane.rowIndex="1" />
+                  <Label fx:id="label_rechnungssumme" text="Rechnungssumme" GridPane.rowIndex="2" />
+                  <Label fx:id="label_rechnungsnummer" text="Rechnungsnummer" GridPane.rowIndex="3" />
+                  <Label fx:id="label_status" text="Status" GridPane.rowIndex="4" />
+                  <Label fx:id="label_datum" text="Datum" GridPane.rowIndex="5" />
+                  <Label fx:id="label_zahlungsfrist" text="Zahlungsfrist" GridPane.rowIndex="6" />
+                  <TextField fx:id="textfield_kundennummer" style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="textfield_rechnungssumme" style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="textfield_rechnungsnummer" style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="textfield_status" style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="textfield_datum" style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField fx:id="textfield_zahlungsfrist" style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                </children>
             </GridPane>
             <ListView layoutX="19.0" layoutY="230.0" prefHeight="268.0" prefWidth="317.0" style="-fx-background-color: #F2F2F2;" />
-            <Button layoutX="52.0" layoutY="514.0" mnemonicParsing="false" style="-fx-background-color: #5882FA; -fx-font-style: #FFFFFF;" text="PDF erstellen" />
+            <Button layoutX="52.0" layoutY="514.0" mnemonicParsing="false" text="PDF erstellen" />
             <Button layoutX="171.0" layoutY="514.0" mnemonicParsing="false" text="Bearbeiten" />
             <Button layoutX="274.0" layoutY="514.0" mnemonicParsing="false" text="Stornieren" />
          </children>
