@@ -59,9 +59,9 @@
                </children>
             </GridPane>
             <ListView layoutX="19.0" layoutY="230.0" prefHeight="268.0" prefWidth="317.0" style="-fx-background-color: #F2F2F2;" />
-            <Button layoutX="52.0" layoutY="514.0" mnemonicParsing="false" text="PDF erstellen" />
+            <Button layoutX="52.0" layoutY="514.0" mnemonicParsing="false" style="-fx-background-color: #5882FA; -fx-font-style: #FFFFFF;" text="PDF erstellen" />
             <Button layoutX="171.0" layoutY="514.0" mnemonicParsing="false" text="Bearbeiten" />
-            <Button layoutX="274.0" layoutY="514.0" mnemonicParsing="false" text="Löschen" />
+            <Button layoutX="274.0" layoutY="514.0" mnemonicParsing="false" text="Stornieren" />
          </children>
       </AnchorPane>
    </children>
