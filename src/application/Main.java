@@ -1,11 +1,14 @@
 package application;
 	
+import com.itextpdf.text.DocumentException;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
+
+import java.io.IOException;
 
 
 public class Main extends Application {
@@ -25,9 +28,26 @@ public class Main extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+
+
+
 	}
+
+	DBConnection db = new DBConnection("sd");
+
+
+
+
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, DocumentException {
+
+
+
+
+		PDFErstellen ps = new PDFErstellen();
+		ps.createPdf("C:\\Fraps\\Rechnung.pdf");
+		ps.printMeasures();
+		System.out.println("done");
 		launch(args);
 	}
 }
