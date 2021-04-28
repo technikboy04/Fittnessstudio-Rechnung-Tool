@@ -12,13 +12,22 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class PDFErstellen {
 
-    public static final String PDF = "C:\\temp\\testausgefüllt.pdf";
+
+
+
+
+
+    public PDFErstellen() throws URISyntaxException {
+    }
 
     public void createPdf(String filename) throws DocumentException,
-            IOException {
+            IOException, URISyntaxException {
         PdfReader pdfTemplate = new PdfReader(filename);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PdfStamper stamper = new PdfStamper(pdfTemplate, out);
@@ -33,7 +42,17 @@ public class PDFErstellen {
         form.setField("tbRePos", form.getField("tbRePos") + "\ntest 2");
 
         stamper.close();
-        FileOutputStream fos = new FileOutputStream("C:\\temp\\testausgefüllt.pdf");
+
+
+
+
+
+        Path dateipfadPath = Paths.get(Main.class.getResource("testausgefüllt.pdf").toURI());
+        String dateipfad = dateipfadPath.toString();
+
+
+        FileOutputStream fos = new FileOutputStream(dateipfad);
+
         out.writeTo(fos);
         fos.close();
         pdfTemplate.close();
