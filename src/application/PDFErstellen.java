@@ -24,7 +24,14 @@ public class PDFErstellen {
         PdfStamper stamper = new PdfStamper(pdfTemplate, out);
         AcroFields form = stamper.getAcroFields();
         //stamper.getAcroFields().setField("testFeld   ", "21.09.1999");
-        form.setField("tpReNum", "test");
+        stamper.getAcroFields().setField("tpReNum", "test");
+        form.setField("tpDatum", "21.09.1999");
+        form.setField("tpZahlung", "2 Wochen");
+        form.setField("tpReSum", "192,63€");
+        form.setField("tpStatus", "Austehend");
+        form.setField("tbRePos", "Artikel 1");
+        form.setField("tbRePos", form.getField("tbRePos") + "\ntest 2");
+
         stamper.close();
         FileOutputStream fos = new FileOutputStream("C:\\temp\\testausgefüllt.pdf");
         out.writeTo(fos);
