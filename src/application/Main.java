@@ -8,7 +8,12 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 public class Main extends Application {
@@ -32,12 +37,14 @@ public class Main extends Application {
 
 	DBConnection db = new DBConnection("sd");
 	
-	public static void main(String[] args) throws IOException, DocumentException {
+	public static void main(String[] args) throws IOException, DocumentException, URISyntaxException {
 
 
-		//Erstellen der PDF und angabe der Vorlagendatei für PDF Creator
+		Path dateipfadPath = Paths.get(Main.class.getResource("Rechnung.pdf").toURI());
+		String dateipfad = dateipfadPath.toString();
+
 		PDFErstellen ps = new PDFErstellen();
-		ps.createPdf("C:\\temp\\Rechnung.pdf");
+		ps.createPdf(dateipfad);
 		ps.printMeasures();
 		System.out.println("done");
 		launch(args);
