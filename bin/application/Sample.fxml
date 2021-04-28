@@ -17,7 +17,7 @@
       <AnchorPane prefHeight="560.0" prefWidth="215.0">
          <children>
             <Label fx:id="label_kunde" layoutX="13.0" layoutY="10.0" prefHeight="21.0" prefWidth="54.0" text="Kunde:" />
-            <TextField fx:id="textfield_sucheingabe" layoutX="7.0" layoutY="31.0" style="-fx-background-color: #f2f2f2;" />
+            <TextField fx:id="textfield_sucheingabe" layoutX="7.0" layoutY="31.0" style="-fx-background-color: #F2F2F2;" />
             <ListView fx:id="listview_rechnungsbrowser" layoutX="10.0" layoutY="64.0" prefHeight="482.0" prefWidth="185.0" style="-fx-background-color: #F2F2F2;" />
             <ImageView fx:id="imageview_suchicon" fitHeight="32.0" fitWidth="39.0" layoutX="159.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -61,7 +61,7 @@
             <ListView layoutX="19.0" layoutY="230.0" prefHeight="268.0" prefWidth="317.0" style="-fx-background-color: #F2F2F2;" />
             <Button layoutX="52.0" layoutY="514.0" mnemonicParsing="false" text="PDF erstellen" />
             <Button layoutX="171.0" layoutY="514.0" mnemonicParsing="false" text="Bearbeiten" />
-            <Button layoutX="274.0" layoutY="514.0" mnemonicParsing="false" text="Löschen" />
+            <Button layoutX="274.0" layoutY="514.0" mnemonicParsing="false" text="Stornieren" />
          </children>
       </AnchorPane>
    </children>

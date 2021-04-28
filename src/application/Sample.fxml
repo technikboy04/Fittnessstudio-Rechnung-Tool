@@ -58,10 +58,10 @@
                   <TextField fx:id="textfield_zahlungsfrist" style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                </children>
             </GridPane>
-            <ListView layoutX="19.0" layoutY="230.0" prefHeight="268.0" prefWidth="317.0" style="-fx-background-color: #F2F2F2;" />
-            <Button layoutX="52.0" layoutY="514.0" mnemonicParsing="false" text="PDF erstellen" />
-            <Button layoutX="171.0" layoutY="514.0" mnemonicParsing="false" text="Bearbeiten" />
-            <Button layoutX="274.0" layoutY="514.0" mnemonicParsing="false" text="Löschen" />
+            <ListView fx:id="listview_rechnunspositionen" layoutX="19.0" layoutY="230.0" prefHeight="268.0" prefWidth="317.0" style="-fx-background-color: #F2F2F2;" />
+            <Button fx:id="button_pdferstellen" layoutX="52.0" layoutY="514.0" mnemonicParsing="false" text="PDF erstellen" />
+            <Button fx:id="button_bearbeiten" layoutX="171.0" layoutY="514.0" mnemonicParsing="false" text="Bearbeiten" />
+            <Button fx:id="button_stornieren" layoutX="274.0" layoutY="514.0" mnemonicParsing="false" text="Stornieren" />
          </children>
       </AnchorPane>
    </children>
