@@ -37,7 +37,7 @@ public class Main extends Application {
 
 		//Erstellen der PDF und angabe der Vorlagendatei für PDF Creator
 		PDFErstellen ps = new PDFErstellen();
-		ps.createPdf("C:\\Fraps\\Rechnung.pdf");
+		ps.createPdf("C:\\temp\\Rechnung.pdf");
 		ps.printMeasures();
 		System.out.println("done");
 		launch(args);
