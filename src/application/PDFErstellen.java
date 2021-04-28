@@ -30,7 +30,7 @@ public class PDFErstellen {
         form.setField("tpReSum", "192,63€");
         form.setField("tpStatus", "Austehend");
         form.setField("tbRePos", "Artikel 1");
-        form.setField("tbRePos", form.getField("tbRePos") + "\ntest 2");
+        form.setField("tbRePos", form.getField("tbRePos") + "\n test 2");
 
         stamper.close();
         FileOutputStream fos = new FileOutputStream("C:\\temp\\testausgefüllt.pdf");
