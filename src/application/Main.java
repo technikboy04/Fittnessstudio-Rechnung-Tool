@@ -28,22 +28,14 @@ public class Main extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-
-
-
 	}
 
 	DBConnection db = new DBConnection("sd");
-
-
-
-
 	
 	public static void main(String[] args) throws IOException, DocumentException {
 
 
-
-
+		//Erstellen der PDF und angabe der Vorlagendatei für PDF Creator
 		PDFErstellen ps = new PDFErstellen();
 		ps.createPdf("C:\\Fraps\\Rechnung.pdf");
 		ps.printMeasures();
