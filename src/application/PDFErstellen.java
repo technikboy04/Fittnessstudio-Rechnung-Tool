@@ -36,7 +36,8 @@ public class PDFErstellen {
         stamper.getAcroFields().setField("tpReNum", "test");
         form.setField("tpDatum", "21.09.1999");
         form.setField("tpZahlung", "2 Wochen");
-        form.setField("tpReSum", "192,63€");
+        form.setField("" +
+                "", "192,63€");
         form.setField("tpStatus", "Austehend");
         form.setField("tbRePos", "Artikel 1");
         form.setField("tbRePos", form.getField("tbRePos") + "\n test 2");
