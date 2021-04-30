@@ -5,9 +5,9 @@ import java.sql.*;
 public class DBConnection {
 
     private final String url = "jdbc:oracle:thin:@oracle.s-atiw.de:1521/atiwora";
-    private String user = "FS192_jsniehota";
-    private String password = "jan";
-    private String db = "atiwora.FS192_jsniehota";
+    private String user = "FS192_ltroesch";
+    private String password = "leon";
+    private String db = "atiwora.FS192_ltroesch";
     private String command;
 
     public String getUrl() {
@@ -47,7 +47,7 @@ public class DBConnection {
     }
 
     public DBConnection(String text){
-        setCommand("SELECT PERSONAL_NR FROM FS192_JSNIEHOTA.PERSONAL");
+        setCommand("SELECT ");
 
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
