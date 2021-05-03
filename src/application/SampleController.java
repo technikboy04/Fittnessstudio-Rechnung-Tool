@@ -20,13 +20,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 
 
 public class SampleController implements Initializable {
-
-    @FXML
-    TextField textfield_kundenField;
 
     @FXML
     TextField textfield_rechnungssumme;
@@ -45,6 +43,9 @@ public class SampleController implements Initializable {
 
     @FXML
     TextField textfield_sucheingabe;
+
+    @FXML
+    TextField textfield_kundennummer;
 
     @FXML
     ListView<String> listview_rechnungsbrowser;
@@ -81,8 +82,18 @@ public class SampleController implements Initializable {
     }
 
     @FXML
-    private void rechungAuswaehlen(){
-        System.out.println(listview_rechnungsbrowser.getSelectionModel().getSelectedItem());
+    private void rechungAuswaehlen() throws SQLException {
+        ResultSet res = DBConnection.rechnungsinformationen(listview_rechnungsbrowser.getSelectionModel().getSelectedItem());
+        while (res.next()){
+            textfield_kundennummer.setText(res.getString("Kunde_ID"));
+            textfield_rechnungssumme.setText(res.getString("Rechnungssumme"));
+            textfield_rechnungsnummer.setText(res.getString("Rechnung_ID"));
+            textfield_status.setText(res.getString("Status_Bezahlung"));
+            SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
+            textfield_datum.setText(res.getString("Rechnungsdatum"));
+            textfield_zahlungsfrist.setText(res.getString("Zahlungsfrist"));
+
+        }
     }
 
     @Override
