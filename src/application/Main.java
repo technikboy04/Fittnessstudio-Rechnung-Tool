@@ -37,16 +37,17 @@ public class Main extends Application {
 		}
 	}
 
+	//DBConnection db = new DBConnection("PERSONAL_NR FROM FS192_ltroesch.PERSONAL");
 	
 	public static void main(String[] args) throws IOException, DocumentException, URISyntaxException {
 
 
-		Path dateipfadPath = Paths.get(Main.class.getResource("Rechnung.pdf").toURI());
+		/*Path dateipfadPath = Paths.get(Main.class.getResource("Rechnung.pdf").toURI());
 		String dateipfad = dateipfadPath.toString();
 
 		PDFErstellen ps = new PDFErstellen();
 		ps.createPdf(dateipfad);
-		System.out.println("done");
+		System.out.println("done");*/
 		launch(args);
 	}
 }

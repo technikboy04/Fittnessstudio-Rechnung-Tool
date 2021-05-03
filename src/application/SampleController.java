@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 
@@ -64,9 +65,23 @@ public class SampleController implements Initializable {
     ImageView imageview_suchicon;
 
 
-    private void suchen(ActionEvent event){
-        //ResultSet rechungen = SQLExecution.rechungenSuchen(textfield_sucheingabe.getText());
+    @FXML
+    private void suchen() throws SQLException {
+        listview_rechnungsbrowser.getItems().clear();
+        ResultSet rechungen = DBConnection.rechnungenSuchen(textfield_sucheingabe.getText());
+        String ergStr = "";
+        while (rechungen.next()){
+            ergStr = ergStr.concat(rechungen.getString("Rechnung_id"));
+            listview_rechnungsbrowser.getItems().add(ergStr);
 
+            //ergStr = ergStr.concat("\n" + res.getString("PERSONAL_NR") + "\n");
+        }
+
+    }
+
+    @FXML
+    private void rechungAuswaehlen(){
+        System.out.println(listview_rechnungsbrowser.getSelectionModel().getSelectedItem());
     }
 
     @Override
