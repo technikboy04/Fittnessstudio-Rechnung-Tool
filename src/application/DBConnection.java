@@ -95,6 +95,13 @@ public class DBConnection {
         return dbExecuteCommand(command);
     }
 
+    public static ResultSet listViewRechnungspositionenEintraege(String Rechnung_ID){
+        String command = "SELECT rp.RECHNUNG_ID, rp.PRODUKT_ID, p.PRODUKT_ID, p.PRODUKTNAME, rp.ANZAHL, rp.PREIS FROM  FS192_ltroesch.RECHNUNG_PRODUKTKATALOG rp,  FS192_ltroesch.PRODUKTKATALOG p WHERE rp.PRODUKT_ID=p.PRODUKT_ID AND rp.RECHNUNG_ID LIKE '"+Rechnung_ID + "'";
+
+        return dbExecuteCommand(command);
+    }
+
+
     public static void updateButtonQuarryExcludeListView(String rechnung_ID, String status, String rechnungsdatum, String zahlungsfrist){
         String command ="update Rechnung set Status = " + status + ", Rechnungsdatum=" + rechnungsdatum + ", zahlungsfrist=" + zahlungsfrist + "where rechnung_ID like '" + rechnung_ID + "'";
         dbExecuteCommand(command);
