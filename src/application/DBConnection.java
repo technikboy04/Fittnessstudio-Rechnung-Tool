@@ -46,7 +46,7 @@ public class DBConnection {
         this.command = command;
     }
 
-    public static ResultSet dbExecuteCommand(String text){
+    public static ResultSet dbExecuteCommand(String command){
 
 
         try {
@@ -57,7 +57,7 @@ public class DBConnection {
 
 
             Statement stt = con.createStatement();
-            ResultSet result = stt.executeQuery(getCommand());
+            ResultSet result = stt.executeQuery(command);
             stt.close();
             con.close();
 
