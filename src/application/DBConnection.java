@@ -84,7 +84,7 @@ public class DBConnection {
 
 //Methode die nach dem Suchen Button ausgeführt wird um alle Rechnungsnummern für die gewünschte Kundennummer besorgt
     public static ResultSet rechnungenSuchen(String Kunde_ID){
-        String command ="select RECHNUNG_ID from Rechnung where Kunde_ID like '" + Kunde_ID + "'";
+        String command ="select RECHNUNG_ID from FS192_ltroesch.Rechnung where Kunde_ID like '" + Kunde_ID + "'";
 
         return dbExecuteCommand(command);
     }
