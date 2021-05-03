@@ -45,7 +45,6 @@ public class Main extends Application {
 
 		PDFErstellen ps = new PDFErstellen();
 		ps.createPdf(dateipfad);
-		ps.printMeasures();
 		System.out.println("done");
 		launch(args);
 	}

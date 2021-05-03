@@ -57,31 +57,7 @@ public class PDFErstellen {
         out.writeTo(fos);
         fos.close();
         pdfTemplate.close();
-//        PdfDocument pdfDoc = new PdfDocument();
-//        Document document = new Document();
-//        PdfWriter writer = PdfWriter.getInstance(document,
-//                new FileOutputStream(filename));
 
-//        document.open();
-//
-//        PdfContentByte cb = writer.getDirectContent();
-//        BaseFont bf = BaseFont.createFont();
-//        setImage(cb, "C:\\Users\\janmo\\Desktop\\Mockup der GUI.PNG", 80);
-//        cb.beginText();
-//        cb.setFontAndSize(bf, 12);
-//        cb.moveText(300, 300);
-//        cb.showText("Falsches Üben von Xylophonmusik quält jeden größeren Zwerg.");
-//        cb.moveText(120, -16);
-//        cb.setCharacterSpacing(2);
-//        cb.setWordSpacing(12);
-//        cb.newlineShowText("Erst recht auch jeden kleineren.");
-//        document.add(new Paragraph("Rechnung"));
-//        Paragraph p = new Paragraph("Das ist ein Text");
-//        document.add(new Paragraph("Bla Bla Bla"));
-
-//       cb.endText();
-
-//        document.close();
 
     }
 
@@ -93,12 +69,6 @@ public class PDFErstellen {
         cb.addImage(img);
     }
 
-    public void printMeasures(){
-        System.out.println("A4-Ma\u00DFe: " + PageSize.A4.getWidth() + "pt x "
-                + PageSize.A4.getHeight() + "pt - "
-                + (PageSize.A4.getWidth() * 0.3527) + "mm x "
-                + (PageSize.A4.getHeight() * 0.3527) + "mm");
-    }
 
 
 }
