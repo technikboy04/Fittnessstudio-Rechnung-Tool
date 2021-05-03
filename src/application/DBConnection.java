@@ -95,4 +95,9 @@ public class DBConnection {
         return dbExecuteCommand(command);
     }
 
+    public static void updateButtonQuarryExcludeListView(String rechnung_ID, String status, String rechnungsdatum, String zahlungsfrist){
+        String command ="update Rechnung set Status = " + status + ", Rechnungsdatum=" + rechnungsdatum + ", zahlungsfrist=" + zahlungsfrist + "where rechnung_ID like '" + rechnung_ID + "'";
+        dbExecuteCommand(command);
+    }
+
 }
