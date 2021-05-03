@@ -18,9 +18,12 @@ import java.nio.file.Paths;
 
 
 public class Main extends Application {
+
+	public static Stage stage;
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			stage = primaryStage;
 			//Test
 			HBox root = (HBox)FXMLLoader.load(getClass().getResource("Sample.fxml"));
 			//AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("ChangePopUp.fxml"));

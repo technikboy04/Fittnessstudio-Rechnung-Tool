@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -101,13 +102,11 @@ public class SampleController implements Initializable {
         button_bearbeiten.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
             @Override
             public void handle(javafx.event.ActionEvent event) {
-                Parent root;
                 try {
-                    root = FXMLLoader.load(Main.class.getClassLoader().getResource("ChangePopUo.fxml"), resources);
-                    Stage stage = new Stage();
-                    stage.setTitle("My New Stage Title");
-                    stage.setScene(new Scene(root, 450, 450));
-                    stage.show();
+                    AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("ChangePopUp.fxml"));
+                    Main.stage.setTitle("My New Stage Title");
+                    Main.stage.setScene(new Scene(root, 450, 450));
+                    Main.stage.show();
                     // Hide this current window (if this is what you want)
                     ((Node)(event.getSource())).getScene().getWindow().hide();
                 }
