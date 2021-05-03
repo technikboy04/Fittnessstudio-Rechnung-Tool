@@ -57,7 +57,7 @@ public class DBConnection {
 
 
             Statement stt = con.createStatement();
-            ResultSet result = stt.executeQuery(getCommand());
+            ResultSet result = stt.executeQuery(text);
             stt.close();
             con.close();
 
