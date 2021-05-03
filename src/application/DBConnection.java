@@ -4,17 +4,17 @@ import java.sql.*;
 
 public class DBConnection {
 
-    private final String url = "jdbc:oracle:thin:@oracle.s-atiw.de:1521/atiwora";
-    private String user = "FS192_ltroesch";
-    private String password = "leon";
-    private String db = "atiwora.FS192_ltroesch";
-    private String command;
+    private static String url = "jdbc:oracle:thin:@oracle.s-atiw.de:1521/atiwora";
+    private static String user = "FS192_ltroesch";
+    private static String password = "leon";
+    private static String db = "atiwora.FS192_ltroesch";
+    private static String command;
 
-    public String getUrl() {
+    public static String getUrl() {
         return url;
     }
 
-    public String getUser() {
+    public static String getUser() {
         return user;
     }
 
@@ -22,7 +22,7 @@ public class DBConnection {
         this.user = user;
     }
 
-    public String getPassword() {
+    public static String getPassword() {
         return password;
     }
 
@@ -38,7 +38,7 @@ public class DBConnection {
         this.db = db;
     }
 
-    public String getCommand() {
+    public static String getCommand() {
         return command;
     }
 
@@ -46,23 +46,28 @@ public class DBConnection {
         this.command = command;
     }
 
-    public DBConnection(String text){
-        setCommand("SELECT ");
+    public static ResultSet dbExecuteCommand(String text){
+
 
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
             Connection con = DriverManager.getConnection(getUrl(), getUser(), getPassword());
 
-            Statement stt = con.createStatement();
-            //stt.execute("Use"+" " + getDb());
-            //stt.execute("Use"+" " + getDb());
 
-            ResultSet res = stt.executeQuery(getCommand());
-            String ergStr = "";
-            while(res.next()){
-                ergStr = ergStr.concat("\n" + res.getString("PERSONAL_NR") + "\n");
-                System.out.println(ergStr);
-            }
+
+
+            Statement stt = con.createStatement();
+            ResultSet result = stt.executeQuery(getCommand());
+            stt.close();
+            con.close();
+
+            return result;
+
+//            String ergStr = "";
+//            while(res.next()){
+//                ergStr = ergStr.concat("\n" + res.getString("PERSONAL_NR") + "\n");
+//                System.out.println(ergStr);
+//            }
 
 
         } catch (ClassNotFoundException e) {
@@ -74,6 +79,14 @@ public class DBConnection {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    return null;
+    }
+
+//Methode die nach dem Suchen Button ausgeführt wird um alle Rechnungsnummern für die gewünschte Kundennummer besorgt
+    public static ResultSet rechnungenSuchen(String Kunde_ID){
+        String command ="select RECHNUNG_ID from Rechnung where Kunde_ID like '" + Kunde_ID + "'";
+
+        return dbExecuteCommand(command);
     }
 
 }
