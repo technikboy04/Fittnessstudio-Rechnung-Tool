@@ -89,4 +89,10 @@ public class DBConnection {
         return dbExecuteCommand(command);
     }
 
+    public static ResultSet rechnungsinformationen(String Rechnung_ID){
+        String command ="select Kunde_ID, Rechnungssumme, Rechnung_ID, Status_Bezahlung, Rechnungsdatum, Zahlungsfrist from FS192_ltroesch.Rechnung where Rechnung_ID like '" + Rechnung_ID + "'";
+
+        return dbExecuteCommand(command);
+    }
+
 }
