@@ -67,15 +67,21 @@ public class SampleController implements Initializable {
 
     @FXML
     private void suchen() throws SQLException {
+        listview_rechnungsbrowser.getItems().clear();
         ResultSet rechungen = DBConnection.rechnungenSuchen(textfield_sucheingabe.getText());
         String ergStr = "";
         while (rechungen.next()){
-            ergStr = ergStr.concat(rechungen.getString("PERSONAL_NR"));
+            ergStr = ergStr.concat(rechungen.getString("Rechnung_id"));
             listview_rechnungsbrowser.getItems().add(ergStr);
 
             //ergStr = ergStr.concat("\n" + res.getString("PERSONAL_NR") + "\n");
         }
 
+    }
+
+    @FXML
+    private void rechungAuswaehlen(){
+        System.out.println(listview_rechnungsbrowser.getSelectionModel().getSelectedItem());
     }
 
     @Override

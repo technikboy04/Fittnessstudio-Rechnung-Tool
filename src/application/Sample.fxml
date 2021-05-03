@@ -18,7 +18,7 @@
          <children>
             <Label fx:id="label_kunde" layoutX="13.0" layoutY="10.0" prefHeight="21.0" prefWidth="54.0" text="Kunde:" />
             <TextField fx:id="textfield_sucheingabe" layoutX="7.0" layoutY="31.0" style="-fx-background-color: #F2F2F2;" />
-            <ListView fx:id="listview_rechnungsbrowser" layoutX="10.0" layoutY="64.0" prefHeight="482.0" prefWidth="185.0" style="-fx-background-color: #F2F2F2;" />
+            <ListView fx:id="listview_rechnungsbrowser" layoutX="10.0" layoutY="64.0" onMouseClicked="#rechungAuswaehlen" prefHeight="482.0" prefWidth="185.0" style="-fx-background-color: #F2F2F2;" />
             <ImageView fx:id="imageview_suchicon" fitHeight="32.0" fitWidth="39.0" layoutX="159.0" layoutY="28.0" onMouseClicked="#suchen" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@suche.PNG" />

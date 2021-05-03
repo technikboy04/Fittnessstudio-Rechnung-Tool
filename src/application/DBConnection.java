@@ -58,8 +58,8 @@ public class DBConnection {
 
             Statement stt = con.createStatement();
             ResultSet result = stt.executeQuery(command);
-            stt.close();
-            con.close();
+           // stt.close();
+           // con.close();
 
             return result;
 
