@@ -37,7 +37,6 @@ public class Main extends Application {
 		}
 	}
 
-	DBConnection db = new DBConnection("PERSONAL_NR FROM FS192_ltroesch.PERSONAL");
 	
 	public static void main(String[] args) throws IOException, DocumentException, URISyntaxException {
 
