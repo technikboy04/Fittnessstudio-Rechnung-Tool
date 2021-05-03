@@ -34,7 +34,7 @@ public class PDFErstellen {
         AcroFields form = stamper.getAcroFields();
         //stamper.getAcroFields().setField("testFeld   ", "21.09.1999");
         stamper.getAcroFields().setField("tpReNum", "test");
-        form.setField("tpDatum", "21.09.1999");
+        form.setField("tpDatum", "2156565");
         form.setField("tpZahlung", "2 Wochen");
         form.setField("" +
                 "", "192,63€");
@@ -43,9 +43,6 @@ public class PDFErstellen {
         form.setField("tbRePos", form.getField("tbRePos") + "\n test 2");
 
         stamper.close();
-
-
-
 
 
         Path dateipfadPath = Paths.get(Main.class.getResource("testausgefüllt.pdf").toURI());
