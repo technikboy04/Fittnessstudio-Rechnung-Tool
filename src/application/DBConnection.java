@@ -96,7 +96,7 @@ public class DBConnection {
     }
 
     public static ResultSet listViewRechnungspositionenEintraege(String Rechnung_ID){
-        String command = "SELECT rp.RECHNUNG_ID, rp.PRODUKT_ID, p.PRODUKT_ID, p.PRODUKTNAME, rp.ANZAHL, rp.PREIS FROM  FS192_ltroesch.RECHNUNG_PRODUKTKATALOG rp,  FS192_ltroesch.PRODUKTKATALOG p WHERE rp.PRODUKT_ID=p.PRODUKT_ID AND rp.RECHNUNG_ID LIKE '"+Rechnung_ID + "'";
+        String command = "SELECT p.PRODUKTNAME, rp.ANZAHL, rp.PREIS FROM  FS192_ltroesch.RECHNUNG_PRODUKTKATALOG rp,  FS192_ltroesch.PRODUKTKATALOG p WHERE rp.PRODUKT_ID=p.PRODUKT_ID AND rp.RECHNUNG_ID LIKE '"+Rechnung_ID + "'";
 
         return dbExecuteCommand(command);
     }
