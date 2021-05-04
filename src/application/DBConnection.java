@@ -137,7 +137,7 @@ public class DBConnection {
     }
 
     public static void updateButtonQuarryAenderDerRechnungspositionen(String rechnung_ID, String anzahl, String Produktname) {
-        String command = "UPDATE FS192_ltroesch.RECHNUNG_PRODUKTKATALO SET Anzahl=" + anzahl + ", Produkt_ID=(SELECT produkt_id FROM FS192_ltroesch.PRODUKTKATALOG WHERE PRODUKTNAME LIKE '" + Produktname + "') WHERE Rechnung_ID LIKE '" + rechnung_ID + "'";
+        String command = "UPDATE FS192_ltroesch.RECHNUNG_PRODUKTKATALOG SET Anzahl=" + anzahl + ", Produkt_ID=(SELECT produkt_id FROM FS192_ltroesch.PRODUKTKATALOG WHERE PRODUKTNAME LIKE '" + Produktname + "') WHERE Rechnung_ID LIKE '" + rechnung_ID + "'";
         dbExecuteUpdate(command);
 
         updateGesamtPreisjeRechnungsPosition(rechnung_ID, Produktname);
