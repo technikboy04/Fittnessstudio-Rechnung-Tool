@@ -56,6 +56,7 @@ public class DBConnection {
 
             Statement stt = con.createStatement();
             ResultSet result = stt.executeQuery(command);
+
             // stt.close();
             // con.close();
 
@@ -80,6 +81,44 @@ public class DBConnection {
         return null;
     }
 
+
+
+    public static void dbExecuteUpdate(String command) {
+
+
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
+            Connection con = DriverManager.getConnection(getUrl(), getUser(), getPassword());
+
+
+            Statement stt = con.createStatement();
+            stt.executeUpdate(command);
+
+
+
+
+//            String ergStr = "";
+//            while(res.next()){
+//                ergStr = ergStr.concat("\n" + res.getString("PERSONAL_NR") + "\n");
+//                System.out.println(ergStr);
+//            }
+
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+
+
+
     //Methode die nach dem Suchen Button ausgeführt wird um alle Rechnungsnummern für die gewünschte Kundennummer besorgt
     public static ResultSet rechnungenSuchen(String Kunde_ID) {
         String command = "select RECHNUNG_ID from FS192_ltroesch.Rechnung where Kunde_ID like '" + Kunde_ID + "'";
@@ -101,12 +140,12 @@ public class DBConnection {
 
     public static void updateButtonQuarryExcludeListView(String rechnung_ID, String status, String rechnungsdatum, String zahlungsfrist) {
         String command = "update FS192_ltroesch.Rechnung set Status = " + status + ", Rechnungsdatum=" + rechnungsdatum + ", zahlungsfrist=" + zahlungsfrist + "where rechnung_ID like '" + rechnung_ID + "'";
-        dbExecuteCommand(command);
+        dbExecuteUpdate(command);
     }
 
     public static void updateButtonQuarryAenderDerRechnungspositionen(String rechnung_ID, String anzahl, String Produktname) {
         String command = "UPDATE FS192_ltroesch.RECHNUNG_PRODUKTKATALO SET Anzahl=" + anzahl + ", Produkt_ID=(SELECT produkt_id FROM FS192_ltroesch.PRODUKTKATALOG WHERE PRODUKTNAME LIKE '" + Produktname + "') WHERE Rechnung_ID LIKE '" + rechnung_ID + "'";
-        dbExecuteCommand(command);
+        dbExecuteUpdate(command);
 
         updateGesamtPreisjeRechnungsPosition(rechnung_ID, Produktname);
         updateRechnungssumme(rechnung_ID);
@@ -117,12 +156,12 @@ public class DBConnection {
                          + rechnung_id + "' AND p.PRODUKT_ID like (select produkt_id from FS192_ltroesch.PRODUKTKATALOG  WHERE PRODUKTNAME LIKE '" + produktname + "')) where RECHNUNG_ID like '" + rechnung_id +
                          "' and PRODUKT_ID like (select produkt_id from FS192_ltroesch.PRODUKTKATALOG where  PRODUKTNAME LIKE '" + produktname + "')";
 
-        dbExecuteCommand(command);
+        dbExecuteUpdate(command);
     }
 
     public static void updateRechnungssumme(String rechnung_id) {
         String command = "update FS192_ltroesch.RECHNUNG set RECHNUNGSSUMME=(select sum(Preis) from FS192_ltroesch.RECHNUNG_PRODUKTKATALOG where RECHNUNG_ID like '" + rechnung_id + "')";
-        dbExecuteCommand(command);
+        dbExecuteUpdate(command);
     }
 
     public static ResultSet getProduktkatalogItems(){
