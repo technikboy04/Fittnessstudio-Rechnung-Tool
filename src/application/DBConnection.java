@@ -104,8 +104,31 @@ public class DBConnection {
         dbExecuteCommand(command);
     }
 
-    public static void updateButtonQuarryAenderDerRechnungspositionen(String rechnung_ID, String anzahl, String preis, String Produktname) {
-        String command = "UPDATE FS192_ltroesch.RECHNUNG_PRODUKTKATALO SET Preis=" + preis + ", Anzahl=" + anzahl + ", Produkt_ID=(SELECT produkt_id FROM FS192_ltroesch.PRODUKTKATALOG WHERE PRODUKTNAME LIKE '" + Produktname + "') WHERE Rechnung_ID LIKE '" + rechnung_ID + "'";
+    public static void updateButtonQuarryAenderDerRechnungspositionen(String rechnung_ID, String anzahl, String Produktname) {
+        String command = "UPDATE FS192_ltroesch.RECHNUNG_PRODUKTKATALO SET Anzahl=" + anzahl + ", Produkt_ID=(SELECT produkt_id FROM FS192_ltroesch.PRODUKTKATALOG WHERE PRODUKTNAME LIKE '" + Produktname + "') WHERE Rechnung_ID LIKE '" + rechnung_ID + "'";
+        dbExecuteCommand(command);
+
+        updateGesamtPreisjeRechnungsPosition(rechnung_ID, Produktname);
+        updateRechnungssumme(rechnung_ID);
+    }
+
+    public static void updateGesamtPreisjeRechnungsPosition(String rechnung_id, String produktname) {
+        String command = "update FS192_ltroesch.RECHNUNG_PRODUKTKATALOG set preis=(SELECT p.PREIS*rp.ANZAHL FROM FS192_ltroesch.RECHNUNG_PRODUKTKATALOG rp ,FS192_ltroesch.PRODUKTKATALOG p WHERE rp.PRODUKT_ID=p.PRODUKT_ID and rp.RECHNUNG_ID LIKE '"
+                         + rechnung_id + "' AND p.PRODUKT_ID like (select produkt_id from FS192_ltroesch.PRODUKTKATALOG  WHERE PRODUKTNAME LIKE '" + produktname + "')) where RECHNUNG_ID like '" + rechnung_id +
+                         "' and PRODUKT_ID like (select produkt_id from FS192_ltroesch.PRODUKTKATALOG where  PRODUKTNAME LIKE '" + produktname + "')";
+
         dbExecuteCommand(command);
     }
+
+    public static void updateRechnungssumme(String rechnung_id) {
+        String command = "update FS192_ltroesch.RECHNUNG set RECHNUNGSSUMME=(select sum(Preis) from FS192_ltroesch.RECHNUNG_PRODUKTKATALOG where RECHNUNG_ID like '" + rechnung_id + "')";
+        dbExecuteCommand(command);
+    }
+
+    public static ResultSet getProduktkatalogItems(){
+        String command = "Select PRODUKTNAME from FS192_ltroesch.PRODUKTKATALOG";
+
+        return dbExecuteCommand(command);
+    }
+
 }
