@@ -82,7 +82,6 @@ public class DBConnection {
     }
 
 
-
     public static void dbExecuteUpdate(String command) {
 
 
@@ -95,14 +94,11 @@ public class DBConnection {
             stt.executeUpdate(command);
 
 
-
-
 //            String ergStr = "";
 //            while(res.next()){
 //                ergStr = ergStr.concat("\n" + res.getString("PERSONAL_NR") + "\n");
 //                System.out.println(ergStr);
 //            }
-
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -115,9 +111,6 @@ public class DBConnection {
         }
 
     }
-
-
-
 
     //Methode die nach dem Suchen Button ausgeführt wird um alle Rechnungsnummern für die gewünschte Kundennummer besorgt
     public static ResultSet rechnungenSuchen(String Kunde_ID) {
@@ -153,8 +146,8 @@ public class DBConnection {
 
     public static void updateGesamtPreisjeRechnungsPosition(String rechnung_id, String produktname) {
         String command = "update FS192_ltroesch.RECHNUNG_PRODUKTKATALOG set preis=(SELECT p.PREIS*rp.ANZAHL FROM FS192_ltroesch.RECHNUNG_PRODUKTKATALOG rp ,FS192_ltroesch.PRODUKTKATALOG p WHERE rp.PRODUKT_ID=p.PRODUKT_ID and rp.RECHNUNG_ID LIKE '"
-                         + rechnung_id + "' AND p.PRODUKT_ID like (select produkt_id from FS192_ltroesch.PRODUKTKATALOG  WHERE PRODUKTNAME LIKE '" + produktname + "')) where RECHNUNG_ID like '" + rechnung_id +
-                         "' and PRODUKT_ID like (select produkt_id from FS192_ltroesch.PRODUKTKATALOG where  PRODUKTNAME LIKE '" + produktname + "')";
+                + rechnung_id + "' AND p.PRODUKT_ID like (select produkt_id from FS192_ltroesch.PRODUKTKATALOG  WHERE PRODUKTNAME LIKE '" + produktname + "')) where RECHNUNG_ID like '" + rechnung_id +
+                "' and PRODUKT_ID like (select produkt_id from FS192_ltroesch.PRODUKTKATALOG where  PRODUKTNAME LIKE '" + produktname + "')";
 
         dbExecuteUpdate(command);
     }
@@ -164,10 +157,8 @@ public class DBConnection {
         dbExecuteUpdate(command);
     }
 
-    public static ResultSet getProduktkatalogItems(){
+    public static ResultSet getProduktkatalogItems() {
         String command = "Select PRODUKTNAME from FS192_ltroesch.PRODUKTKATALOG";
-
         return dbExecuteCommand(command);
     }
-
 }
