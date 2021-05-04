@@ -49,7 +49,6 @@ public class PopUpController implements Initializable {
     TextField textfield_anzahl;
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -61,19 +60,19 @@ public class PopUpController implements Initializable {
         textfield_rechnungsnummer.setText(PopUpMain.getRechnungsnummer());
 
         ResultSet res = DBConnection.rechnungsinformationen(textfield_rechnungsnummer.getText());
-        try{
+        try {
             while (res.next()) {
 
 
                 choicebox_status.getItems().add(res.getString("Status_Bezahlung"));
                 choicebox_status.getItems().add("Storniert");
                 choicebox_status.getSelectionModel().select(0);
-              //  textfield_datum.setText(res.getString("Rechnungsdatum"));
-               // textfield_zahlungsfrist.setText(res.getString("Zahlungsfrist"));
+                //  textfield_datum.setText(res.getString("Rechnungsdatum"));
+                // textfield_zahlungsfrist.setText(res.getString("Zahlungsfrist"));
 
                 res = DBConnection.listViewRechnungspositionenEintraege(textfield_rechnungsnummer.getText());
 
-                while (res.next()){
+                while (res.next()) {
 
                     tableview_rechnungspositionen.getItems().add(new Rechnungsposition(res.getString("Produktname"), res.getString("Anzahl"), res.getString("Preis")));
 
@@ -81,12 +80,12 @@ public class PopUpController implements Initializable {
 
                 res = DBConnection.getProduktkatalogItems();
 
-                while (res.next()){
+                while (res.next()) {
                     choicebox_produkte.getItems().add(res.getString("Produktname"));
                 }
 
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -99,9 +98,9 @@ public class PopUpController implements Initializable {
     }
 
     @FXML
-    private void updateRechnungsposition(){
-
-       DBConnection.updateButtonQuarryAenderDerRechnungspositionen(textfield_rechnungsnummer.getText(), textfield_anzahl.getText(), choicebox_produkte.getSelectionModel().getSelectedItem().toString());
+    private void updateRechnungsposition() {
+        Rechnungsposition rechnungsposition = (Rechnungsposition) tableview_rechnungspositionen.getSelectionModel().getSelectedItem();
+        DBConnection.updateButtonQuarryAenderDerRechnungspositionen(textfield_rechnungsnummer.getText(), textfield_anzahl.getText(), choicebox_produkte.getSelectionModel().getSelectedItem().toString(), rechnungsposition.getProduktname());
 
     }
 
