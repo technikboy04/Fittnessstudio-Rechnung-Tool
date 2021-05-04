@@ -46,7 +46,7 @@ public class DBConnection {
         this.command = command;
     }
 
-    public static ResultSet dbExecuteCommand(String command){
+    public static ResultSet dbExecuteCommand(String command) {
 
 
         try {
@@ -54,12 +54,10 @@ public class DBConnection {
             Connection con = DriverManager.getConnection(getUrl(), getUser(), getPassword());
 
 
-
-
             Statement stt = con.createStatement();
             ResultSet result = stt.executeQuery(command);
-           // stt.close();
-           // con.close();
+            // stt.close();
+            // con.close();
 
             return result;
 
@@ -79,39 +77,35 @@ public class DBConnection {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-    return null;
+        return null;
     }
 
-//Methode die nach dem Suchen Button ausgeführt wird um alle Rechnungsnummern für die gewünschte Kundennummer besorgt
-    public static ResultSet rechnungenSuchen(String Kunde_ID){
-        String command ="select RECHNUNG_ID from FS192_ltroesch.Rechnung where Kunde_ID like '" + Kunde_ID + "'";
+    //Methode die nach dem Suchen Button ausgeführt wird um alle Rechnungsnummern für die gewünschte Kundennummer besorgt
+    public static ResultSet rechnungenSuchen(String Kunde_ID) {
+        String command = "select RECHNUNG_ID from FS192_ltroesch.Rechnung where Kunde_ID like '" + Kunde_ID + "'";
 
         return dbExecuteCommand(command);
     }
 
-    public static ResultSet rechnungsinformationen(String Rechnung_ID){
-        String command ="select Kunde_ID, Rechnungssumme, Rechnung_ID, Status_Bezahlung, Rechnungsdatum, Zahlungsfrist from FS192_ltroesch.Rechnung where Rechnung_ID like '" + Rechnung_ID + "'";
+    public static ResultSet rechnungsinformationen(String Rechnung_ID) {
+        String command = "select Kunde_ID, Rechnungssumme, Rechnung_ID, Status_Bezahlung, Rechnungsdatum, Zahlungsfrist from FS192_ltroesch.Rechnung where Rechnung_ID like '" + Rechnung_ID + "'";
 
         return dbExecuteCommand(command);
     }
 
-    public static ResultSet listViewRechnungspositionenEintraege(String Rechnung_ID){
-        String command = "SELECT p.PRODUKTNAME, rp.ANZAHL, rp.PREIS FROM  FS192_ltroesch.RECHNUNG_PRODUKTKATALOG rp,  FS192_ltroesch.PRODUKTKATALOG p WHERE rp.PRODUKT_ID=p.PRODUKT_ID AND rp.RECHNUNG_ID LIKE '"+Rechnung_ID + "'";
+    public static ResultSet listViewRechnungspositionenEintraege(String Rechnung_ID) {
+        String command = "SELECT p.PRODUKTNAME, rp.ANZAHL, rp.PREIS FROM  FS192_ltroesch.RECHNUNG_PRODUKTKATALOG rp,  FS192_ltroesch.PRODUKTKATALOG p WHERE rp.PRODUKT_ID=p.PRODUKT_ID AND rp.RECHNUNG_ID LIKE '" + Rechnung_ID + "'";
 
         return dbExecuteCommand(command);
     }
 
-    public static void updateButtonQuarryExcludeListView(String rechnung_ID, String status, String rechnungsdatum, String zahlungsfrist){
-        String command ="update FS192_ltroesch.Rechnung set Status = " + status + ", Rechnungsdatum=" + rechnungsdatum + ", zahlungsfrist=" + zahlungsfrist + "where rechnung_ID like '" + rechnung_ID + "'";
+    public static void updateButtonQuarryExcludeListView(String rechnung_ID, String status, String rechnungsdatum, String zahlungsfrist) {
+        String command = "update FS192_ltroesch.Rechnung set Status = " + status + ", Rechnungsdatum=" + rechnungsdatum + ", zahlungsfrist=" + zahlungsfrist + "where rechnung_ID like '" + rechnung_ID + "'";
         dbExecuteCommand(command);
     }
 
-    public static void updateButtonQuarryAenderDerRechnungspositionen(String rechnung_ID, String anzahl, String preis, String Produktname){
+    public static void updateButtonQuarryAenderDerRechnungspositionen(String rechnung_ID, String anzahl, String preis, String Produktname) {
         String command = "UPDATE FS192_ltroesch.RECHNUNG_PRODUKTKATALO SET Preis=" + preis + ", Anzahl=" + anzahl + ", Produkt_ID=(SELECT produkt_id FROM FS192_ltroesch.PRODUKTKATALOG WHERE PRODUKTNAME LIKE '" + Produktname + "') WHERE Rechnung_ID LIKE '" + rechnung_ID + "'";
         dbExecuteCommand(command);
     }
-
-
-
-
 }
