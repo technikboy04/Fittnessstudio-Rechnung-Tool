@@ -98,4 +98,11 @@ public class PopUpController implements Initializable {
 
     }
 
+    @FXML
+    private void updateRechnungsposition(){
+
+       DBConnection.updateButtonQuarryAenderDerRechnungspositionen(textfield_rechnungsnummer.getText(), textfield_anzahl.getText(), choicebox_produkte.getSelectionModel().getSelectedItem().toString());
+
+    }
+
 }

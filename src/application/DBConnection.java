@@ -151,7 +151,7 @@ public class DBConnection {
         updateRechnungssumme(rechnung_ID);
     }
 
-    public static void updateGesamtPreisjeRechnungsPosition(String rechnung_id, String produktname) {
+    private static void updateGesamtPreisjeRechnungsPosition(String rechnung_id, String produktname) {
         String command = "update FS192_ltroesch.RECHNUNG_PRODUKTKATALOG set preis=(SELECT p.PREIS*rp.ANZAHL FROM FS192_ltroesch.RECHNUNG_PRODUKTKATALOG rp ,FS192_ltroesch.PRODUKTKATALOG p WHERE rp.PRODUKT_ID=p.PRODUKT_ID and rp.RECHNUNG_ID LIKE '"
                          + rechnung_id + "' AND p.PRODUKT_ID like (select produkt_id from FS192_ltroesch.PRODUKTKATALOG  WHERE PRODUKTNAME LIKE '" + produktname + "')) where RECHNUNG_ID like '" + rechnung_id +
                          "' and PRODUKT_ID like (select produkt_id from FS192_ltroesch.PRODUKTKATALOG where  PRODUKTNAME LIKE '" + produktname + "')";
@@ -159,7 +159,7 @@ public class DBConnection {
         dbExecuteUpdate(command);
     }
 
-    public static void updateRechnungssumme(String rechnung_id) {
+    private static void updateRechnungssumme(String rechnung_id) {
         String command = "update FS192_ltroesch.RECHNUNG set RECHNUNGSSUMME=(select sum(Preis) from FS192_ltroesch.RECHNUNG_PRODUKTKATALOG where RECHNUNG_ID like '" + rechnung_id + "')";
         dbExecuteUpdate(command);
     }
