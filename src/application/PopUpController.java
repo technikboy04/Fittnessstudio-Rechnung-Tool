@@ -2,6 +2,7 @@ package application;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
@@ -10,6 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.awt.event.ActionListener;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,12 +28,6 @@ public class PopUpController implements Initializable {
     TextField textfield_kundennummer;
 
     @FXML
-    TextField textfield_datum;
-
-    @FXML
-    TextField textfield_zahlungsfrist;
-
-    @FXML
     ChoiceBox choicebox_status;
 
     @FXML
@@ -45,6 +41,12 @@ public class PopUpController implements Initializable {
 
     @FXML
     TableColumn column_preis;
+
+    @FXML
+    ChoiceBox choicebox_produkte;
+
+    @FXML
+    TextField textfield_anzahl;
 
 
 
@@ -77,11 +79,22 @@ public class PopUpController implements Initializable {
 
                 }
 
+                res = DBConnection.getProduktkatalogItems();
+
+                while (res.next()){
+                    choicebox_produkte.getItems().add(res.getString("Produktname"));
+                }
+
             }
         }catch (SQLException e){
             e.printStackTrace();
         }
 
+        tableview_rechnungspositionen.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            Rechnungsposition rechnungsposition = (Rechnungsposition) tableview_rechnungspositionen.getSelectionModel().getSelectedItem();
+            textfield_anzahl.setText(rechnungsposition.getAnzahl());
+            choicebox_produkte.getSelectionModel().select(rechnungsposition.getProduktname());
+        });
 
     }
 
