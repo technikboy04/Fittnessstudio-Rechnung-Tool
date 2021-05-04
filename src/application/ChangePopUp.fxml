@@ -4,12 +4,13 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="675.0" prefWidth="528.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="675.0" prefWidth="528.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PopUpController">
    <children>
       <Label layoutX="65.0" layoutY="68.0" prefHeight="21.0" prefWidth="156.0" text="Kundennummer">
          <font>
@@ -37,16 +38,15 @@
          </font>
       </Label>
       <TextField fx:id="textfield_kundennummer" layoutX="303.0" layoutY="66.0" />
-      <TextField fx:id="textfield_rechnungssumme" layoutX="303.0" layoutY="101.0" />
-      <ChoiceBox layoutX="303.0" layoutY="136.0" prefWidth="150.0" />
-      <DatePicker fx:id="textfield_datum" layoutX="303.0" layoutY="171.0" />
-      <DatePicker fx:id="textfield_zahlungsfrist" layoutX="303.0" layoutY="206.0" />
+      <TextField fx:id="textfield_rechnungsnummer" layoutX="303.0" layoutY="101.0" />
+      <ChoiceBox fx:id="choicebox_status" layoutX="303.0" layoutY="136.0" prefWidth="150.0" />
+      <DatePicker layoutX="303.0" layoutY="171.0" />
+      <DatePicker layoutX="303.0" layoutY="206.0" />
       <Label layoutX="208.0" layoutY="25.0" prefHeight="21.0" prefWidth="106.0" text="Daten ändern">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <ListView layoutX="35.0" layoutY="271.0" prefHeight="209.0" prefWidth="459.0" />
       <Label layoutX="66.0" layoutY="516.0" prefHeight="17.0" prefWidth="149.0" text="Anzahl">
          <font>
             <Font size="15.0" />
@@ -60,5 +60,12 @@
       <ChoiceBox layoutX="296.0" layoutY="551.0" prefWidth="150.0" />
       <TextField layoutX="296.0" layoutY="514.0" prefHeight="25.0" prefWidth="117.0" />
       <Button layoutX="427.0" layoutY="641.0" mnemonicParsing="false" text="Anwenden" />
+      <TableView fx:id="tableview_rechnungspositionen" layoutX="55.0" layoutY="267.0" prefHeight="221.0" prefWidth="438.0">
+        <columns>
+          <TableColumn fx:id="column_produktname" prefWidth="231.0" text="Produktname" />
+          <TableColumn fx:id="column_anzahl" prefWidth="105.0" text="Anzahl" />
+            <TableColumn fx:id="column_preis" prefWidth="100.0" text="Preis" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

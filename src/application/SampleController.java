@@ -109,9 +109,6 @@ public class SampleController implements Initializable {
 
             res = DBConnection.listViewRechnungspositionenEintraege(textfield_rechnungsnummer.getText());
 
-
-            ObservableList<Rechnungsposition> pos = FXCollections.observableArrayList();
-
             while (res.next()){
 
                 tableview_rechnungspositionen.getItems().add(new Rechnungsposition(res.getString("Produktname"), res.getString("Anzahl"), res.getString("Preis")));
@@ -128,18 +125,15 @@ public class SampleController implements Initializable {
         button_bearbeiten.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
             @Override
             public void handle(javafx.event.ActionEvent event) {
+
+                Stage newStage = new Stage();
+                PopUpMain PopUp = new PopUpMain(textfield_sucheingabe.getText(), textfield_rechnungsnummer.getText(), tableview_rechnungspositionen.getItems());
                 try {
-                    Stage stage = new Stage();
-                    AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("ChangePopUp.fxml"));
-                    stage.setTitle("My New Stage Title");
-                    stage.setScene(new Scene(root, 450, 450));
-                    stage.show();
-                    // Hide this current window (if this is what you want)
-                    ((Node)(event.getSource())).getScene().getWindow().hide();
-                }
-                catch (IOException e) {
+                    PopUp.start(newStage);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
+
             }
         });
 
