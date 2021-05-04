@@ -101,10 +101,17 @@ public class DBConnection {
         return dbExecuteCommand(command);
     }
 
-
     public static void updateButtonQuarryExcludeListView(String rechnung_ID, String status, String rechnungsdatum, String zahlungsfrist){
-        String command ="update Rechnung set Status = " + status + ", Rechnungsdatum=" + rechnungsdatum + ", zahlungsfrist=" + zahlungsfrist + "where rechnung_ID like '" + rechnung_ID + "'";
+        String command ="update FS192_ltroesch.Rechnung set Status = " + status + ", Rechnungsdatum=" + rechnungsdatum + ", zahlungsfrist=" + zahlungsfrist + "where rechnung_ID like '" + rechnung_ID + "'";
         dbExecuteCommand(command);
     }
+
+    public static void updateButtonQuarryAenderDerRechnungspositionen(String rechnung_ID, String anzahl, String preis, String Produktname){
+        String command = "UPDATE FS192_ltroesch.RECHNUNG_PRODUKTKATALO SET Preis=" + preis + ", Anzahl=" + anzahl + ", Produkt_ID=(SELECT produkt_id FROM PRODUKTKATALOG WHERE PRODUKTNAME LIKE '" + Produktname + "') WHERE Rechnung_ID LIKE '" + rechnung_ID + "'";
+        dbExecuteCommand(command);
+    }
+
+
+
 
 }
