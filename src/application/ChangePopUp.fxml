@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="675.0" prefWidth="528.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane prefHeight="675.0" prefWidth="528.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="65.0" layoutY="68.0" prefHeight="21.0" prefWidth="156.0" text="Kundennummer">
          <font>
@@ -36,11 +36,11 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField layoutX="303.0" layoutY="66.0" />
-      <TextField layoutX="303.0" layoutY="101.0" />
+      <TextField fx:id="textfield_kundennummer" layoutX="303.0" layoutY="66.0" />
+      <TextField fx:id="textfield_rechnungssumme" layoutX="303.0" layoutY="101.0" />
       <ChoiceBox layoutX="303.0" layoutY="136.0" prefWidth="150.0" />
-      <DatePicker layoutX="303.0" layoutY="171.0" />
-      <DatePicker layoutX="303.0" layoutY="206.0" />
+      <DatePicker fx:id="textfield_datum" layoutX="303.0" layoutY="171.0" />
+      <DatePicker fx:id="textfield_zahlungsfrist" layoutX="303.0" layoutY="206.0" />
       <Label layoutX="208.0" layoutY="25.0" prefHeight="21.0" prefWidth="106.0" text="Daten ändern">
          <font>
             <Font size="15.0" />

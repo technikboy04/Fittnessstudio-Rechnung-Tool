@@ -5,8 +5,8 @@ import java.sql.*;
 public class DBConnection {
 
     private static String url = "jdbc:oracle:thin:@oracle.s-atiw.de:1521/atiwora";
-    private static String user = "FS192_ltroesch";
-    private static String password = "leon";
+    private static String user = "FS192_jmorast";
+    private static String password = "jan";
     private static String db = "atiwora.FS192_ltroesch";
     private static String command;
 

@@ -1,5 +1,8 @@
 package application;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,9 +10,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -22,6 +24,8 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -52,7 +56,16 @@ public class SampleController implements Initializable {
     ListView<String> listview_rechnungsbrowser;
 
     @FXML
-    ListView<String> listview_rechnunspositionen;
+    TableView tableview_rechnungspositionen;
+
+    @FXML
+    TableColumn column_produktname;
+
+    @FXML
+    TableColumn column_anzahl;
+
+    @FXML
+    TableColumn column_preis;
 
     @FXML
     Button button_pdferstellen;
@@ -94,6 +107,19 @@ public class SampleController implements Initializable {
             textfield_datum.setText(res.getString("Rechnungsdatum"));
             textfield_zahlungsfrist.setText(res.getString("Zahlungsfrist"));
 
+            res = DBConnection.listViewRechnungspositionenEintraege(textfield_rechnungsnummer.getText());
+
+
+            ObservableList<Rechnungsposition> pos = FXCollections.observableArrayList();
+
+            while (res.next()){
+
+                tableview_rechnungspositionen.getItems().add(new Rechnungsposition(res.getString("Produktname"), res.getString("Anzahl"), res.getString("Preis")));
+
+            }
+
+
+
         }
     }
 
@@ -103,10 +129,11 @@ public class SampleController implements Initializable {
             @Override
             public void handle(javafx.event.ActionEvent event) {
                 try {
+                    Stage stage = new Stage();
                     AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("ChangePopUp.fxml"));
-                    Main.stage.setTitle("My New Stage Title");
-                    Main.stage.setScene(new Scene(root, 450, 450));
-                    Main.stage.show();
+                    stage.setTitle("My New Stage Title");
+                    stage.setScene(new Scene(root, 450, 450));
+                    stage.show();
                     // Hide this current window (if this is what you want)
                     ((Node)(event.getSource())).getScene().getWindow().hide();
                 }
@@ -115,5 +142,13 @@ public class SampleController implements Initializable {
                 }
             }
         });
+
+        column_produktname.setCellValueFactory(new PropertyValueFactory<Rechnungsposition, String>("produktname"));
+        column_anzahl.setCellValueFactory(new PropertyValueFactory<Rechnungsposition, String>("anzahl"));
+        column_preis.setCellValueFactory(new PropertyValueFactory<Rechnungsposition, String>("preis"));
+
+        textfield_kundennummer.setDisable(true);
+
     }
+
 }
