@@ -24,7 +24,7 @@ public class PDFErstellen {
     public PDFErstellen() throws URISyntaxException {
     }
 
-    public void createPdf(String filename, List rechnungsDaten, ObservableList rechnungspositionen) throws DocumentException,
+    public void createPdf(String filename, List rechnungsDaten, ObservableList rechnungspositionen, String rechnungsPfad) throws DocumentException,
             IOException, URISyntaxException {
         PdfReader pdfTemplate = new PdfReader(filename);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -41,7 +41,7 @@ public class PDFErstellen {
 
         //Rechnungspositionen setzen
         StringBuilder sb = new StringBuilder();
-        sb.append("%30s" + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "Anzahl" + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "Preis" + "\n");
+        sb.append("Produktname" + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "Anzahl" + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "Preis" + "\n");
         for (Object o : rechnungspositionen) {
             Rechnungsposition position = (Rechnungsposition) o;
             sb.append(position.getProduktname() + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + position.getAnzahl() + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + position.getPreis() + "\n");
@@ -57,7 +57,7 @@ public class PDFErstellen {
         //String dateipfad = dateipfadPath.toString();
 
 
-        FileOutputStream fos = new FileOutputStream("test.pdf");
+        FileOutputStream fos = new FileOutputStream(rechnungsPfad+".pdf");
 
         out.writeTo(fos);
         fos.close();

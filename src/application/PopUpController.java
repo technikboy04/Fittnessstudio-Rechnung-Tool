@@ -76,9 +76,19 @@ public class PopUpController implements Initializable {
             while (res.next()) {
 
 
-                choicebox_status.getItems().add(res.getString("Status_Bezahlung"));
-                choicebox_status.getItems().add("Storniert");
-                choicebox_status.getSelectionModel().select(0);
+                choicebox_status.getItems().addAll("bezahlt", "offen", "storniert");
+                switch (res.getString("Status_Bezahlung")){
+                    case "bezahlt":
+                        choicebox_status.getSelectionModel().select(0);
+                        break;
+                    case "offen":
+                        choicebox_status.getSelectionModel().select(1);
+                        break;
+                    case "storniert":
+                        choicebox_status.getSelectionModel().select(2);
+                        break;
+                }
+
                 SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
                 SimpleDateFormat DE_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
                 datepicker_datum.setValue((DATE_FORMAT.parse(res.getString("Rechnungsdatum"))).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
@@ -115,7 +125,12 @@ public class PopUpController implements Initializable {
     @FXML
     private void updateRechnungsposition() {
         Rechnungsposition rechnungsposition = (Rechnungsposition) tableview_rechnungspositionen.getSelectionModel().getSelectedItem();
-        DBConnection.updateButtonQuarryAenderDerRechnungspositionen(textfield_rechnungsnummer.getText(), textfield_anzahl.getText(), choicebox_produkte.getSelectionModel().getSelectedItem().toString(), rechnungsposition.getProduktname());
+        if(choicebox_produkte.getSelectionModel().getSelectedItem() != null){
+            DBConnection.updateButtonQuarryAenderDerRechnungspositionen(textfield_rechnungsnummer.getText(), textfield_anzahl.getText(), choicebox_produkte.getSelectionModel().getSelectedItem().toString(), rechnungsposition.getProduktname());
+
+        }
+        DBConnection.updateButtonQuarryExcludeListView(textfield_rechnungsnummer.getText(), choicebox_status.getSelectionModel().getSelectedItem().toString(), datepicker_datum.getValue().toString(), datepicker_zahlungsfrist.getValue().toString());
+
         try {
 
             fillTableview();
