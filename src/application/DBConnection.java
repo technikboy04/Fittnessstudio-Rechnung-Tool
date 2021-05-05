@@ -153,7 +153,7 @@ public class DBConnection {
     }
 
     private static void updateRechnungssumme(String rechnung_id) {
-        String command = "update FS192_ltroesch.RECHNUNG set RECHNUNGSSUMME=(select sum(Preis) from FS192_ltroesch.RECHNUNG_PRODUKTKATALOG where RECHNUNG_ID like '" + rechnung_id + "')";
+        String command = "update FS192_ltroesch.RECHNUNG set RECHNUNGSSUMME=(select sum(Preis) from FS192_ltroesch.RECHNUNG_PRODUKTKATALOG where RECHNUNG_ID like '" + rechnung_id + "') where RECHNUNG_ID like '" + rechnung_id + "'";
         dbExecuteUpdate(command);
     }
 
@@ -165,5 +165,10 @@ public class DBConnection {
     public static ResultSet getNachname(String kunden_id){
         String command = "Select Nachname from FS192_ltroesch.Kunde where Kunde_ID like'" + kunden_id + "'";
         return dbExecuteCommand(command);
+    }
+
+    private static void updateButtonStornieren(String rechnung_id) {
+        String command = "update FS192_ltroesch.RECHNUNG set STATUS_BEZAHLUNG = 'storniert' WHERE Rechnung_ID LIKE '" + rechnung_id  +"')";
+        dbExecuteUpdate(command);
     }
 }
