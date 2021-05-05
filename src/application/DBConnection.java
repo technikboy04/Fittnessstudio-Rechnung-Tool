@@ -166,4 +166,9 @@ public class DBConnection {
         String command = "Select Nachname from FS192_ltroesch.Kunde where Kunde_ID like'" + kunden_id + "'";
         return dbExecuteCommand(command);
     }
+
+    private static void updateButtonStornieren(String rechnung_id) {
+        String command = "update FS192_ltroesch.RECHNUNG set STATUS_BEZAHLUNG = 'storniert' WHERE Rechnung_ID LIKE '" + rechnung_id  +"')";
+        dbExecuteUpdate(command);
+    }
 }
