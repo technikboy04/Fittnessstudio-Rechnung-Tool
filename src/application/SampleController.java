@@ -144,7 +144,7 @@ public class SampleController implements Initializable {
     }
 
     @FXML
-    private void toPDF() throws URISyntaxException, DocumentException, IOException {
+    private void toPDF() throws URISyntaxException, DocumentException, IOException, SQLException {
         List<String> data =  Arrays.asList(
                 textfield_kundennummer.getText(),
                 textfield_datum.getText(),
@@ -156,7 +156,13 @@ public class SampleController implements Initializable {
 
         Path dateipfadPath = Paths.get(Main.class.getResource("Rechnung.pdf").toURI());
 
-        new PDFErstellen().createPdf(dateipfadPath.toString(),data, tableview_rechnungspositionen.getItems());
+        StringBuilder sb = new StringBuilder();
+        sb.append(textfield_rechnungsnummer.getText() + "_");
+        sb.append(textfield_datum.getText() + "_");
+        ResultSet res = DBConnection.getNachname(textfield_kundennummer.getText());
+        res.next();
+        sb.append(res.getString("Nachname"));
+        new PDFErstellen().createPdf(dateipfadPath.toString(),data, tableview_rechnungspositionen.getItems(), sb.toString());
 
     }
 
