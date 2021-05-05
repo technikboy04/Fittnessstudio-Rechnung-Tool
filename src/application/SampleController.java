@@ -35,10 +35,10 @@ import java.util.*;
 public class SampleController implements Initializable {
 
     @FXML
-    TextField textfield_rechnungssumme;
+    Label textfield_rechnungssumme;
 
     @FXML
-    TextField textfield_rechnungsnummer;
+    Label textfield_rechnungsnummer;
 
     @FXML
     TextField textfield_status;
@@ -53,7 +53,7 @@ public class SampleController implements Initializable {
     TextField textfield_sucheingabe;
 
     @FXML
-    TextField textfield_kundennummer;
+    Label textfield_kundennummer;
 
     @FXML
     public ListView<String> listview_rechnungsbrowser;
@@ -82,6 +82,9 @@ public class SampleController implements Initializable {
     @FXML
     ImageView imageview_suchicon;
 
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    private static final SimpleDateFormat DE_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
+
 
     @FXML
     private void suchen() throws SQLException {
@@ -99,22 +102,34 @@ public class SampleController implements Initializable {
     }
 
     @FXML
-    private void rechungAuswaehlen() throws SQLException, ParseException {
-        ResultSet res = DBConnection.rechnungsinformationen(listview_rechnungsbrowser.getSelectionModel().getSelectedItem());
-        while (res.next()){
-            textfield_kundennummer.setText(res.getString("Kunde_ID"));
+    public void rechungAuswaehlen() {
+        try {
+            ResultSet res = DBConnection.rechnungsinformationen(listview_rechnungsbrowser.getSelectionModel().getSelectedItem());
+            while (res.next()) {
+                textfield_kundennummer.setText(res.getString("Kunde_ID"));
+                textfield_rechnungssumme.setText(res.getString("Rechnungssumme"));
+                textfield_rechnungsnummer.setText(res.getString("Rechnung_ID"));
+                textfield_status.setText(res.getString("Status_Bezahlung"));
 
-            textfield_rechnungsnummer.setText(res.getString("Rechnung_ID"));
-            textfield_status.setText(res.getString("Status_Bezahlung"));
-            SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat DE_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 
-            textfield_datum.setText(DE_DATE_FORMAT.format(DATE_FORMAT.parse(res.getString("Rechnungsdatum").split(" ")[0])));
+                textfield_datum.setText(DE_DATE_FORMAT.format(DATE_FORMAT.parse(res.getString("Rechnungsdatum").split(" ")[0])));
 
-            textfield_zahlungsfrist.setText(DE_DATE_FORMAT.format(DATE_FORMAT.parse(res.getString("Zahlungsfrist"))));
+                textfield_zahlungsfrist.setText(DE_DATE_FORMAT.format(DATE_FORMAT.parse(res.getString("Zahlungsfrist"))));
 
-            rechnungAktualisieren();
+                res = DBConnection.listViewRechnungspositionenEintraege(textfield_rechnungsnummer.getText());
+
+                tableview_rechnungspositionen.getItems().clear();
+                while (res.next()) {
+
+                    tableview_rechnungspositionen.getItems().add(new Rechnungsposition(res.getString("Produktname"), res.getString("Anzahl"), res.getString("Preis")));
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
+
     }
 
     @Override
@@ -166,26 +181,10 @@ public class SampleController implements Initializable {
 
     }
 
-    public void rechnungAktualisieren(){
-
-        try {
-            ResultSet res = DBConnection.rechnungsinformationen(listview_rechnungsbrowser.getSelectionModel().getSelectedItem());
-            while (res.next()){
-                textfield_rechnungssumme.setText(res.getString("Rechnungssumme"));
-            }
-
-            res = DBConnection.listViewRechnungspositionenEintraege(textfield_rechnungsnummer.getText());
-
-            tableview_rechnungspositionen.getItems().clear();
-            while (res.next()){
-
-                tableview_rechnungspositionen.getItems().add(new Rechnungsposition(res.getString("Produktname"), res.getString("Anzahl"), res.getString("Preis")));
-
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-
+    @FXML
+    private void stornierenButton() {
+        DBConnection.dbExecuteUpdate(textfield_rechnungsnummer.getText());
+        rechungAuswaehlen();
     }
 
 }

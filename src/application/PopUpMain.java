@@ -30,7 +30,7 @@ public class PopUpMain extends Application {
         primaryStage.setHeight(730);
         primaryStage.setWidth(550);
         primaryStage.setTitle("Rechnung bearbeiten");
-        primaryStage.setOnCloseRequest(event -> Main.controller.rechnungAktualisieren());
+        primaryStage.setOnCloseRequest(event -> Main.controller.rechungAuswaehlen());
         primaryStage.show();
     }
 

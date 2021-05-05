@@ -52,12 +52,12 @@
                   <Label fx:id="label_status" text="Status" GridPane.rowIndex="4" />
                   <Label fx:id="label_datum" text="Datum" GridPane.rowIndex="5" />
                   <Label fx:id="label_zahlungsfrist" text="Zahlungsfrist" GridPane.rowIndex="6" />
-                  <TextField fx:id="textfield_kundennummer" style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="textfield_rechnungssumme" style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField fx:id="textfield_rechnungsnummer" style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <TextField fx:id="textfield_status" style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <TextField fx:id="textfield_datum" style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <TextField fx:id="textfield_zahlungsfrist" style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Label fx:id="textfield_kundennummer" prefHeight="27.0" prefWidth="184.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="textfield_rechnungssumme" prefHeight="27.0" prefWidth="185.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="textfield_rechnungsnummer" prefHeight="30.0" prefWidth="187.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
             <TableView fx:id="tableview_rechnungspositionen" layoutX="14.0" layoutY="220.0" prefHeight="283.0" prefWidth="326.0">
@@ -69,7 +69,7 @@
             </TableView>
             <Button fx:id="button_pdferstellen" layoutX="52.0" layoutY="514.0" mnemonicParsing="false" onAction="#toPDF" text="PDF erstellen" />
             <Button fx:id="button_bearbeiten" layoutX="171.0" layoutY="514.0" mnemonicParsing="false" text="Bearbeiten" />
-            <Button fx:id="button_stornieren" layoutX="274.0" layoutY="514.0" mnemonicParsing="false" text="Stornieren" />
+            <Button fx:id="button_stornieren" layoutX="274.0" layoutY="514.0" mnemonicParsing="false" onAction="#stornierenButton" text="Stornieren" />
          </children>
       </AnchorPane>
    </children>

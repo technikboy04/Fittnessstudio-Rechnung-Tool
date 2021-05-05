@@ -167,8 +167,9 @@ public class DBConnection {
         return dbExecuteCommand(command);
     }
 
-    private static void updateButtonStornieren(String rechnung_id) {
-        String command = "update FS192_ltroesch.RECHNUNG set STATUS_BEZAHLUNG = 'storniert' WHERE Rechnung_ID LIKE '" + rechnung_id  +"')";
+    public static void updateButtonStornieren(String rechnung_id) {
+        String command = "update FS192_ltroesch.RECHNUNG set STATUS_BEZAHLUNG = 'storniert' WHERE Rechnung_ID LIKE '" + rechnung_id  +"'";
+        System.out.println(command);
         dbExecuteUpdate(command);
     }
 }
