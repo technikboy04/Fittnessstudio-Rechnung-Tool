@@ -129,7 +129,7 @@ public class PopUpController implements Initializable {
             DBConnection.updateButtonQuarryAenderDerRechnungspositionen(textfield_rechnungsnummer.getText(), textfield_anzahl.getText(), choicebox_produkte.getSelectionModel().getSelectedItem().toString(), rechnungsposition.getProduktname());
 
         }
-        DBConnection.updateButtonQuarryExcludeListView(textfield_rechnungsnummer.getText(), choicebox_status.getSelectionModel().getSelectedItem().toString(), datepicker_datum.getValue().toString(), datepicker_zahlungsfrist.getValue().toString());
+        DBConnection.updateButtonQuarryExcludeListView(textfield_rechnungsnummer.getText(), choicebox_status.getSelectionModel().getSelectedItem().toString(), datepicker_datum.getValue().toString() , datepicker_zahlungsfrist.getValue().toString());
 
         try {
 
