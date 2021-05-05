@@ -82,7 +82,7 @@ public class DBConnection {
     }
 
 
-    public static void dbExecuteUpdate(String command) {
+    private static void dbExecuteUpdate(String command) {
 
 
         try {
@@ -162,13 +162,13 @@ public class DBConnection {
         return dbExecuteCommand(command);
     }
 
-    public static ResultSet getNachname(String kunden_id){
+    public static ResultSet getNachname(String kunden_id) {
         String command = "Select Nachname from FS192_ltroesch.Kunde where Kunde_ID like'" + kunden_id + "'";
         return dbExecuteCommand(command);
     }
 
-    private static void updateButtonStornieren(String rechnung_id) {
-        String command = "update FS192_ltroesch.RECHNUNG set STATUS_BEZAHLUNG = 'storniert' WHERE Rechnung_ID LIKE '" + rechnung_id  +"'";
+    public static void updateButtonStornieren(String rechnung_id) {
+        String command = "update FS192_ltroesch.RECHNUNG set STATUS_BEZAHLUNG = 'storniert' WHERE Rechnung_ID LIKE '" + rechnung_id + "'";
         dbExecuteUpdate(command);
     }
 }

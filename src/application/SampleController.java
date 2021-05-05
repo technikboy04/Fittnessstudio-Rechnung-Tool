@@ -41,13 +41,13 @@ public class SampleController implements Initializable {
     Label textfield_rechnungsnummer;
 
     @FXML
-    TextField textfield_status;
+    Label textfield_status;
 
     @FXML
-    TextField textfield_datum;
+    Label textfield_datum;
 
     @FXML
-    TextField textfield_zahlungsfrist;
+    Label textfield_zahlungsfrist;
 
     @FXML
     TextField textfield_sucheingabe;
@@ -154,13 +154,12 @@ public class SampleController implements Initializable {
         column_anzahl.setCellValueFactory(new PropertyValueFactory<Rechnungsposition, String>("anzahl"));
         column_preis.setCellValueFactory(new PropertyValueFactory<Rechnungsposition, String>("preis"));
 
-        textfield_kundennummer.setDisable(true);
 
     }
 
     @FXML
     private void toPDF() throws URISyntaxException, DocumentException, IOException, SQLException {
-        List<String> data =  Arrays.asList(
+        List<String> data = Arrays.asList(
                 textfield_kundennummer.getText(),
                 textfield_datum.getText(),
                 textfield_rechnungsnummer.getText(),
@@ -177,13 +176,13 @@ public class SampleController implements Initializable {
         ResultSet res = DBConnection.getNachname(textfield_kundennummer.getText());
         res.next();
         sb.append(res.getString("Nachname"));
-        new PDFErstellen().createPdf(dateipfadPath.toString(),data, tableview_rechnungspositionen.getItems(), sb.toString());
+        new PDFErstellen().createPdf(dateipfadPath.toString(), data, tableview_rechnungspositionen.getItems(), sb.toString());
 
     }
 
     @FXML
     private void stornierenButton() {
-        DBConnection.dbExecuteUpdate(textfield_rechnungsnummer.getText());
+        DBConnection.updateButtonStornieren(textfield_rechnungsnummer.getText());
         rechungAuswaehlen();
     }
 

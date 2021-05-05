@@ -57,19 +57,18 @@ public class PopUpController implements Initializable {
     @FXML
     DatePicker datepicker_zahlungsfrist;
 
-    private static Boolean isClosed = false;
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        isClosed =false;
 
         column_produktname.setCellValueFactory(new PropertyValueFactory<Rechnungsposition, String>("produktname"));
         column_anzahl.setCellValueFactory(new PropertyValueFactory<Rechnungsposition, String>("anzahl"));
         column_preis.setCellValueFactory(new PropertyValueFactory<Rechnungsposition, String>("preis"));
 
         textfield_kundennummer.setText(PopUpMain.getKundennummer());
+        textfield_kundennummer.setDisable(true);
         textfield_rechnungsnummer.setText(PopUpMain.getRechnungsnummer());
+        textfield_rechnungsnummer.setDisable(true);
 
         ResultSet res = DBConnection.rechnungsinformationen(textfield_rechnungsnummer.getText());
         try {
@@ -77,7 +76,7 @@ public class PopUpController implements Initializable {
 
 
                 choicebox_status.getItems().addAll("bezahlt", "offen", "storniert");
-                switch (res.getString("Status_Bezahlung")){
+                switch (res.getString("Status_Bezahlung")) {
                     case "bezahlt":
                         choicebox_status.getSelectionModel().select(0);
                         break;
@@ -95,8 +94,7 @@ public class PopUpController implements Initializable {
                 datepicker_zahlungsfrist.setValue((DATE_FORMAT.parse(res.getString("Zahlungsfrist"))).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 
 
-
-               fillTableview();
+                fillTableview();
 
                 res = DBConnection.getProduktkatalogItems();
 
@@ -111,10 +109,10 @@ public class PopUpController implements Initializable {
 
         tableview_rechnungspositionen.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             Rechnungsposition rechnungsposition = (Rechnungsposition) tableview_rechnungspositionen.getSelectionModel().getSelectedItem();
-            try{
+            try {
                 textfield_anzahl.setText(rechnungsposition.getAnzahl());
                 choicebox_produkte.getSelectionModel().select(rechnungsposition.getProduktname());
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
 
             }
 
@@ -125,11 +123,11 @@ public class PopUpController implements Initializable {
     @FXML
     private void updateRechnungsposition() {
         Rechnungsposition rechnungsposition = (Rechnungsposition) tableview_rechnungspositionen.getSelectionModel().getSelectedItem();
-        if(choicebox_produkte.getSelectionModel().getSelectedItem() != null){
+        if (choicebox_produkte.getSelectionModel().getSelectedItem() != null) {
             DBConnection.updateButtonQuarryAenderDerRechnungspositionen(textfield_rechnungsnummer.getText(), textfield_anzahl.getText(), choicebox_produkte.getSelectionModel().getSelectedItem().toString(), rechnungsposition.getProduktname());
 
         }
-        DBConnection.updateButtonQuarryExcludeListView(textfield_rechnungsnummer.getText(), choicebox_status.getSelectionModel().getSelectedItem().toString(), datepicker_datum.getValue().toString() , datepicker_zahlungsfrist.getValue().toString());
+        DBConnection.updateButtonQuarryExcludeListView(textfield_rechnungsnummer.getText(), choicebox_status.getSelectionModel().getSelectedItem().toString(), datepicker_datum.getValue().toString(), datepicker_zahlungsfrist.getValue().toString());
 
         try {
 
@@ -145,7 +143,7 @@ public class PopUpController implements Initializable {
 
         ResultSet res = DBConnection.listViewRechnungspositionenEintraege(textfield_rechnungsnummer.getText());
 
-        if(tableview_rechnungspositionen.getItems().size() != 0){
+        if (tableview_rechnungspositionen.getItems().size() != 0) {
             System.out.println(tableview_rechnungspositionen.getItems().size());
             tableview_rechnungspositionen.getItems().clear();
         }
@@ -158,12 +156,5 @@ public class PopUpController implements Initializable {
         }
     }
 
-    public static boolean isClosed(){
-        return isClosed;
-    }
-
-    public static void  setIsClosed(){
-        isClosed = true;
-    }
 
 }

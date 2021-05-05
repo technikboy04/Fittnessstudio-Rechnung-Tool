@@ -30,7 +30,6 @@ public class PDFErstellen {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PdfStamper stamper = new PdfStamper(pdfTemplate, out);
         AcroFields form = stamper.getAcroFields();
-        //stamper.getAcroFields().setField("testFeld   ", "21.09.1999");
 
         form.setField("tpKdNum", (String) rechnungsDaten.get(0));
         form.setField("tpDatum", (String) rechnungsDaten.get(1));
@@ -57,22 +56,12 @@ public class PDFErstellen {
         //String dateipfad = dateipfadPath.toString();
 
 
-        FileOutputStream fos = new FileOutputStream(rechnungsPfad+".pdf");
+        FileOutputStream fos = new FileOutputStream(rechnungsPfad + ".pdf");
 
         out.writeTo(fos);
         fos.close();
         pdfTemplate.close();
 
-
     }
-
-    public void setImage(PdfContentByte cb, String imgPath, float scalePercent)
-            throws MalformedURLException, IOException, DocumentException {
-        Image img = Image.getInstance(imgPath);
-        img.scalePercent(scalePercent);
-        img.setAbsolutePosition(cb.getXTLM(), cb.getYTLM());
-        cb.addImage(img);
-    }
-
 
 }

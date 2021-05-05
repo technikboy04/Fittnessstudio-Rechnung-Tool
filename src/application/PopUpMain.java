@@ -17,11 +17,12 @@ public class PopUpMain extends Application {
     private static String rechnungsnummer;
     private static ObservableList list;
 
-    public PopUpMain(String kundennummer, String rechnungsnummer, ObservableList list){
+    public PopUpMain(String kundennummer, String rechnungsnummer, ObservableList list) {
         PopUpMain.list = list;
         PopUpMain.setKundennummer(kundennummer);
         PopUpMain.setRechnungsnummer(rechnungsnummer);
     }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
 
