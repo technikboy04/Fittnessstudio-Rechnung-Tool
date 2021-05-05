@@ -153,7 +153,7 @@ public class DBConnection {
     }
 
     private static void updateRechnungssumme(String rechnung_id) {
-        String command = "update FS192_ltroesch.RECHNUNG set RECHNUNGSSUMME=(select sum(Preis) from FS192_ltroesch.RECHNUNG_PRODUKTKATALOG where RECHNUNG_ID like '" + rechnung_id + "')";
+        String command = "update FS192_ltroesch.RECHNUNG set RECHNUNGSSUMME=(select sum(Preis) from FS192_ltroesch.RECHNUNG_PRODUKTKATALOG where RECHNUNG_ID like '" + rechnung_id + "') where RECHNUNG_ID like '" + rechnung_id + "'";
         dbExecuteUpdate(command);
     }
 
