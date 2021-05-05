@@ -4,18 +4,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ResourceBundle;
 
 public class PopUpController implements Initializable {
@@ -48,9 +51,18 @@ public class PopUpController implements Initializable {
     @FXML
     TextField textfield_anzahl;
 
+    @FXML
+    DatePicker datepicker_datum;
+
+    @FXML
+    DatePicker datepicker_zahlungsfrist;
+
+    private static Boolean isClosed = false;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        isClosed =false;
 
         column_produktname.setCellValueFactory(new PropertyValueFactory<Rechnungsposition, String>("produktname"));
         column_anzahl.setCellValueFactory(new PropertyValueFactory<Rechnungsposition, String>("anzahl"));
@@ -67,16 +79,14 @@ public class PopUpController implements Initializable {
                 choicebox_status.getItems().add(res.getString("Status_Bezahlung"));
                 choicebox_status.getItems().add("Storniert");
                 choicebox_status.getSelectionModel().select(0);
-                //  textfield_datum.setText(res.getString("Rechnungsdatum"));
-                // textfield_zahlungsfrist.setText(res.getString("Zahlungsfrist"));
+                SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat DE_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
+                datepicker_datum.setValue((DATE_FORMAT.parse(res.getString("Rechnungsdatum"))).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                datepicker_zahlungsfrist.setValue((DATE_FORMAT.parse(res.getString("Zahlungsfrist"))).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 
-                res = DBConnection.listViewRechnungspositionenEintraege(textfield_rechnungsnummer.getText());
 
-                while (res.next()) {
 
-                    tableview_rechnungspositionen.getItems().add(new Rechnungsposition(res.getString("Produktname"), res.getString("Anzahl"), res.getString("Preis")));
-
-                }
+               fillTableview();
 
                 res = DBConnection.getProduktkatalogItems();
 
@@ -85,14 +95,19 @@ public class PopUpController implements Initializable {
                 }
 
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ParseException e) {
             e.printStackTrace();
         }
 
         tableview_rechnungspositionen.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             Rechnungsposition rechnungsposition = (Rechnungsposition) tableview_rechnungspositionen.getSelectionModel().getSelectedItem();
-            textfield_anzahl.setText(rechnungsposition.getAnzahl());
-            choicebox_produkte.getSelectionModel().select(rechnungsposition.getProduktname());
+            try{
+                textfield_anzahl.setText(rechnungsposition.getAnzahl());
+                choicebox_produkte.getSelectionModel().select(rechnungsposition.getProduktname());
+            }catch (NullPointerException e){
+
+            }
+
         });
 
     }
@@ -101,7 +116,39 @@ public class PopUpController implements Initializable {
     private void updateRechnungsposition() {
         Rechnungsposition rechnungsposition = (Rechnungsposition) tableview_rechnungspositionen.getSelectionModel().getSelectedItem();
         DBConnection.updateButtonQuarryAenderDerRechnungspositionen(textfield_rechnungsnummer.getText(), textfield_anzahl.getText(), choicebox_produkte.getSelectionModel().getSelectedItem().toString(), rechnungsposition.getProduktname());
+        try {
 
+            fillTableview();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    private void fillTableview() throws SQLException {
+
+        ResultSet res = DBConnection.listViewRechnungspositionenEintraege(textfield_rechnungsnummer.getText());
+
+        if(tableview_rechnungspositionen.getItems().size() != 0){
+            System.out.println(tableview_rechnungspositionen.getItems().size());
+            tableview_rechnungspositionen.getItems().clear();
+        }
+
+
+        while (res.next()) {
+
+            tableview_rechnungspositionen.getItems().add(new Rechnungsposition(res.getString("Produktname"), res.getString("Anzahl"), res.getString("Preis")));
+
+        }
+    }
+
+    public static boolean isClosed(){
+        return isClosed;
+    }
+
+    public static void  setIsClosed(){
+        isClosed = true;
     }
 
 }

@@ -40,8 +40,8 @@
       <TextField fx:id="textfield_kundennummer" layoutX="303.0" layoutY="66.0" />
       <TextField fx:id="textfield_rechnungsnummer" layoutX="303.0" layoutY="101.0" />
       <ChoiceBox fx:id="choicebox_status" layoutX="303.0" layoutY="136.0" prefWidth="150.0" />
-      <DatePicker layoutX="303.0" layoutY="171.0" />
-      <DatePicker layoutX="303.0" layoutY="206.0" />
+      <DatePicker fx:id="datepicker_datum" layoutX="303.0" layoutY="171.0" />
+      <DatePicker fx:id="datepicker_zahlungsfrist" layoutX="303.0" layoutY="206.0" />
       <Label layoutX="208.0" layoutY="25.0" prefHeight="21.0" prefWidth="106.0" text="Daten ändern">
          <font>
             <Font size="15.0" />

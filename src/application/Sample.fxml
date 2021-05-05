@@ -67,7 +67,7 @@
                   <TableColumn fx:id="column_preis" prefWidth="83.0" text="Preis" />
               </columns>
             </TableView>
-            <Button fx:id="button_pdferstellen" layoutX="52.0" layoutY="514.0" mnemonicParsing="false" text="PDF erstellen" />
+            <Button fx:id="button_pdferstellen" layoutX="52.0" layoutY="514.0" mnemonicParsing="false" onAction="#toPDF" text="PDF erstellen" />
             <Button fx:id="button_bearbeiten" layoutX="171.0" layoutY="514.0" mnemonicParsing="false" text="Bearbeiten" />
             <Button fx:id="button_stornieren" layoutX="274.0" layoutY="514.0" mnemonicParsing="false" text="Stornieren" />
          </children>

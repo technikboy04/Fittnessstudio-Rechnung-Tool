@@ -1,5 +1,6 @@
 package application;
 
+import com.itextpdf.text.DocumentException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,13 +21,15 @@ import javafx.stage.Stage;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 public class SampleController implements Initializable {
@@ -53,7 +56,7 @@ public class SampleController implements Initializable {
     TextField textfield_kundennummer;
 
     @FXML
-    ListView<String> listview_rechnungsbrowser;
+    public ListView<String> listview_rechnungsbrowser;
 
     @FXML
     TableView tableview_rechnungspositionen;
@@ -96,27 +99,21 @@ public class SampleController implements Initializable {
     }
 
     @FXML
-    private void rechungAuswaehlen() throws SQLException {
+    private void rechungAuswaehlen() throws SQLException, ParseException {
         ResultSet res = DBConnection.rechnungsinformationen(listview_rechnungsbrowser.getSelectionModel().getSelectedItem());
         while (res.next()){
             textfield_kundennummer.setText(res.getString("Kunde_ID"));
-            textfield_rechnungssumme.setText(res.getString("Rechnungssumme"));
+
             textfield_rechnungsnummer.setText(res.getString("Rechnung_ID"));
             textfield_status.setText(res.getString("Status_Bezahlung"));
-            SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
-            textfield_datum.setText(res.getString("Rechnungsdatum"));
-            textfield_zahlungsfrist.setText(res.getString("Zahlungsfrist"));
+            SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat DE_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 
-            res = DBConnection.listViewRechnungspositionenEintraege(textfield_rechnungsnummer.getText());
+            textfield_datum.setText(DE_DATE_FORMAT.format(DATE_FORMAT.parse(res.getString("Rechnungsdatum").split(" ")[0])));
 
-            while (res.next()){
+            textfield_zahlungsfrist.setText(DE_DATE_FORMAT.format(DATE_FORMAT.parse(res.getString("Zahlungsfrist"))));
 
-                tableview_rechnungspositionen.getItems().add(new Rechnungsposition(res.getString("Produktname"), res.getString("Anzahl"), res.getString("Preis")));
-
-            }
-
-
-
+            rechnungAktualisieren();
         }
     }
 
@@ -125,6 +122,7 @@ public class SampleController implements Initializable {
         button_bearbeiten.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
             @Override
             public void handle(javafx.event.ActionEvent event) {
+
 
                 Stage newStage = new Stage();
                 PopUpMain PopUp = new PopUpMain(textfield_sucheingabe.getText(), textfield_rechnungsnummer.getText(), tableview_rechnungspositionen.getItems());
@@ -142,6 +140,45 @@ public class SampleController implements Initializable {
         column_preis.setCellValueFactory(new PropertyValueFactory<Rechnungsposition, String>("preis"));
 
         textfield_kundennummer.setDisable(true);
+
+    }
+
+    @FXML
+    private void toPDF() throws URISyntaxException, DocumentException, IOException {
+        List<String> data =  Arrays.asList(
+                textfield_kundennummer.getText(),
+                textfield_datum.getText(),
+                textfield_rechnungsnummer.getText(),
+                textfield_zahlungsfrist.getText(),
+                textfield_rechnungssumme.getText(),
+                textfield_status.getText()
+        );
+
+        Path dateipfadPath = Paths.get(Main.class.getResource("Rechnung.pdf").toURI());
+
+        new PDFErstellen().createPdf(dateipfadPath.toString(),data, tableview_rechnungspositionen.getItems());
+
+    }
+
+    public void rechnungAktualisieren(){
+
+        try {
+            ResultSet res = DBConnection.rechnungsinformationen(listview_rechnungsbrowser.getSelectionModel().getSelectedItem());
+            while (res.next()){
+                textfield_rechnungssumme.setText(res.getString("Rechnungssumme"));
+            }
+
+            res = DBConnection.listViewRechnungspositionenEintraege(textfield_rechnungsnummer.getText());
+
+            tableview_rechnungspositionen.getItems().clear();
+            while (res.next()){
+
+                tableview_rechnungspositionen.getItems().add(new Rechnungsposition(res.getString("Produktname"), res.getString("Anzahl"), res.getString("Preis")));
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
 
     }
 
