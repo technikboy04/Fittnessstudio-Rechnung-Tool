@@ -132,7 +132,7 @@ public class DBConnection {
     }
 
     public static void updateButtonQuarryExcludeListView(String rechnung_ID, String status, String rechnungsdatum, String zahlungsfrist) {
-        String command = "update FS192_ltroesch.Rechnung set STATUS_BEZAHLUNG = '" + status + "', Rechnungsdatum=" + rechnungsdatum + ", zahlungsfrist=" + zahlungsfrist + " where rechnung_ID like '" + rechnung_ID + "'";
+        String command = "update FS192_ltroesch.Rechnung set STATUS_BEZAHLUNG = '" + status + "', Rechnungsdatum= DATE'" + rechnungsdatum + "', zahlungsfrist= DATE'" + zahlungsfrist + "' where rechnung_ID like '" + rechnung_ID + "'";
         dbExecuteUpdate(command);
     }
 
