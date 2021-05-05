@@ -161,4 +161,9 @@ public class DBConnection {
         String command = "Select PRODUKTNAME from FS192_ltroesch.PRODUKTKATALOG";
         return dbExecuteCommand(command);
     }
+
+    public static ResultSet getNachname(String kunden_id){
+        String command = "Select Nachname from FS192_ltroesch.Kunde where Kunde_ID like'" + kunden_id + "'";
+        return dbExecuteCommand(command);
+    }
 }
