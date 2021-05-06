@@ -219,9 +219,21 @@ public class DBConnection {
      * @param produktname Produktname
      * @param anzahl      Anzahl
      */
+
     public static void artikelHinzufuegen(String rechnung_id, String produktname, String anzahl) {
         String command = "INSERT INTO FS192_LTROESCH.RECHNUNG_PRODUKTKATALOG VALUES ('" + rechnung_id + "', " +
                 "(SELECT PRODUKT_ID FROM FS192_LTROESCH.PRODUKTKATALOG p WHERE PRODUKTNAME LIKE '" + produktname + "'), (SELECT PREIS FROM FS192_LTROESCH.PRODUKTKATALOG WHERE PRODUKT_ID LIKE (SELECT PRODUKT_ID FROM FS192_LTROESCH.PRODUKTKATALOG p WHERE PRODUKTNAME LIKE '" + produktname + "')), " + anzahl + ")";
+        dbExecuteUpdate(command);
+    }
+
+
+    /**SQL Quarry zum löschen von Rechnungspositionen in der Datenabnk
+     *
+     * @param rechnung_id
+     * @param produktname
+     */
+    public static void deleteRechnungsposition(String rechnung_id, String produktname){
+       String command =  "DELETE FROM FS192_ltroesch.RECHNUNG_PRODUKTKATALOG WHERE RECHNUNG_ID LIKE '" + rechnung_id + "' AND PRODUKT_ID LIKE (SELECT PRODUKT_ID FROM FS192_LTROESCH.PRODUKTKATALOG WHERE PRODUKTNAME LIKE '" + produktname + "')" ;
         dbExecuteUpdate(command);
     }
 }
