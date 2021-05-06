@@ -156,5 +156,10 @@ public class PopUpController implements Initializable {
         }
     }
 
+    @FXML
+    private void loescheRechnungsposition(){
+
+    }
+
 
 }

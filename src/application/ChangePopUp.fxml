@@ -60,6 +60,7 @@
       <ChoiceBox fx:id="choicebox_produkte" layoutX="296.0" layoutY="551.0" prefWidth="150.0" />
       <TextField fx:id="textfield_anzahl" layoutX="296.0" layoutY="514.0" prefHeight="25.0" prefWidth="117.0" />
       <Button layoutX="427.0" layoutY="641.0" mnemonicParsing="false" onAction="#updateRechnungsposition" text="Anwenden" />
+      <Button layoutX="348.0" layoutY="641.0" mnemonicParsing="false" onAction="#loescheRechnungsposition" text="Löschen" />
       <TableView fx:id="tableview_rechnungspositionen" layoutX="55.0" layoutY="267.0" prefHeight="221.0" prefWidth="438.0">
         <columns>
           <TableColumn fx:id="column_produktname" prefWidth="231.0" text="Produktname" />
