@@ -1,23 +1,15 @@
 package application;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ResourceBundle;
 
@@ -25,46 +17,49 @@ public class PopUpController implements Initializable {
 
 
     @FXML
-    TextField textfield_rechnungsnummer;
+    private TextField textfield_rechnungsnummer;
 
     @FXML
-    TextField textfield_kundennummer;
+    private TextField textfield_kundennummer;
 
     @FXML
-    ChoiceBox choicebox_status;
+    private ChoiceBox choicebox_status;
 
     @FXML
-    TableView tableview_rechnungspositionen;
+    private TableView tableview_rechnungspositionen;
 
     @FXML
-    TableColumn column_produktname;
+    private TableColumn column_produktname;
 
     @FXML
-    TableColumn column_anzahl;
+    private TableColumn column_anzahl;
 
     @FXML
-    TableColumn column_preis;
+    private TableColumn column_preis;
 
     @FXML
-    ChoiceBox choicebox_produkte;
+    private ChoiceBox choicebox_produkte;
 
     @FXML
-    TextField textfield_anzahl;
+    private TextField textfield_anzahl;
 
     @FXML
-    DatePicker datepicker_datum;
+    private DatePicker datepicker_datum;
 
     @FXML
-    DatePicker datepicker_zahlungsfrist;
+    private DatePicker datepicker_zahlungsfrist;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        // Mit der CellValueFactory werden die Daten aus der Rechnungsposition passend in die TableView geladen
         column_produktname.setCellValueFactory(new PropertyValueFactory<Rechnungsposition, String>("produktname"));
         column_anzahl.setCellValueFactory(new PropertyValueFactory<Rechnungsposition, String>("anzahl"));
         column_preis.setCellValueFactory(new PropertyValueFactory<Rechnungsposition, String>("preis"));
 
+
+        // Befüllen aller Felder
         textfield_kundennummer.setText(PopUpMain.getKundennummer());
         textfield_kundennummer.setDisable(true);
         textfield_rechnungsnummer.setText(PopUpMain.getRechnungsnummer());
@@ -123,15 +118,20 @@ public class PopUpController implements Initializable {
     @FXML
     private void updateRechnungsposition() {
         Rechnungsposition rechnungsposition = (Rechnungsposition) tableview_rechnungspositionen.getSelectionModel().getSelectedItem();
-        if (choicebox_produkte.getSelectionModel().getSelectedItem() != null) {
+        if (choicebox_produkte.getSelectionModel().getSelectedItem() != null && tableview_rechnungspositionen.getSelectionModel().getSelectedItem() != null) {
             DBConnection.updateButtonQuarryAenderDerRechnungspositionen(textfield_rechnungsnummer.getText(), textfield_anzahl.getText(), choicebox_produkte.getSelectionModel().getSelectedItem().toString(), rechnungsposition.getProduktname());
 
+        }
+        if (textfield_anzahl.getText() != null && choicebox_produkte.getSelectionModel().getSelectedItem() != null && tableview_rechnungspositionen.getSelectionModel().getSelectedItem() == null) {
+            DBConnection.artikelHinzufuegen(textfield_rechnungsnummer.getText(), choicebox_produkte.getSelectionModel().getSelectedItem().toString(), textfield_anzahl.getText());
         }
         DBConnection.updateButtonQuarryExcludeListView(textfield_rechnungsnummer.getText(), choicebox_status.getSelectionModel().getSelectedItem().toString(), datepicker_datum.getValue().toString(), datepicker_zahlungsfrist.getValue().toString());
 
         try {
 
             fillTableview();
+            textfield_anzahl.setText("");
+            choicebox_produkte.setValue(null);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -144,7 +144,7 @@ public class PopUpController implements Initializable {
         ResultSet res = DBConnection.listViewRechnungspositionenEintraege(textfield_rechnungsnummer.getText());
 
         if (tableview_rechnungspositionen.getItems().size() != 0) {
-            System.out.println(tableview_rechnungspositionen.getItems().size());
+
             tableview_rechnungspositionen.getItems().clear();
         }
 

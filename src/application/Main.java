@@ -1,5 +1,5 @@
 package application;
-	
+
 import com.itextpdf.text.DocumentException;
 import javafx.application.Application;
 import javafx.scene.image.Image;
@@ -19,38 +19,31 @@ import java.nio.file.Paths;
 
 public class Main extends Application {
 
-	public static SampleController controller;
-	@Override
-	public void start(Stage primaryStage) {
-		try {
-			//HBox root = (HBox)FXMLLoader.load(getClass().getResource("Sample.fxml"));
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("Sample.fxml"));
-			HBox root = loader.load();
-			controller = loader.getController();
-			Scene scene = new Scene(root,400,400);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.setWidth(600);
-			primaryStage.setHeight(600);
-			primaryStage.setTitle("Rechnungstool");
-			primaryStage.getIcons().add(new Image("application/icon.png"));
-			primaryStage.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+    //Wird benötigt, um die Informationen Stage-übergreifend zu aktualisieren
+    public static SampleController controller;
 
-	//DBConnection db = new DBConnection("PERSONAL_NR FROM FS192_ltroesch.PERSONAL");
-	
-	public static void main(String[] args) throws IOException, DocumentException, URISyntaxException {
+    @Override
+    public void start(Stage primaryStage) {
+        try {
+            //HBox root = (HBox)FXMLLoader.load(getClass().getResource("Sample.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Sample.fxml"));
+            HBox root = loader.load();
+            controller = loader.getController();
+            Scene scene = new Scene(root, 400, 400);
+            scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+            primaryStage.setScene(scene);
+            primaryStage.setWidth(600);
+            primaryStage.setHeight(600);
+            primaryStage.setTitle("Rechnungstool");
+            primaryStage.getIcons().add(new Image("application/icon.png"));
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
-		/*Path dateipfadPath = Paths.get(Main.class.getResource("Rechnung.pdf").toURI());
-		String dateipfad = dateipfadPath.toString();
-
-		PDFErstellen ps = new PDFErstellen();
-		ps.createPdf(dateipfad);
-		System.out.println("done");*/
-		launch(args);
-	}
+    public static void main(String[] args) throws IOException, DocumentException, URISyntaxException {
+        launch(args);
+    }
 }

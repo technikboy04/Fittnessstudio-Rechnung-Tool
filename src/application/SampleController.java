@@ -1,25 +1,14 @@
 package application;
 
 import com.itextpdf.text.DocumentException;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -35,72 +24,79 @@ import java.util.*;
 public class SampleController implements Initializable {
 
     @FXML
-    Label textfield_rechnungssumme;
+    private Label textfield_rechnungssumme;
 
     @FXML
-    Label textfield_rechnungsnummer;
+    private Label textfield_rechnungsnummer;
 
     @FXML
-    Label textfield_status;
+    private Label textfield_status;
 
     @FXML
-    Label textfield_datum;
+    private Label textfield_datum;
 
     @FXML
-    Label textfield_zahlungsfrist;
+    private Label textfield_zahlungsfrist;
 
     @FXML
-    TextField textfield_sucheingabe;
+    private TextField textfield_sucheingabe;
 
     @FXML
-    Label textfield_kundennummer;
+    private Label textfield_kundennummer;
 
     @FXML
     public ListView<String> listview_rechnungsbrowser;
 
     @FXML
-    TableView tableview_rechnungspositionen;
+    private TableView tableview_rechnungspositionen;
 
     @FXML
-    TableColumn column_produktname;
+    private TableColumn column_produktname;
 
     @FXML
-    TableColumn column_anzahl;
+    private TableColumn column_anzahl;
 
     @FXML
-    TableColumn column_preis;
+    private TableColumn column_preis;
 
     @FXML
-    Button button_pdferstellen;
+    private Button button_pdferstellen;
 
     @FXML
-    Button button_bearbeiten;
+    private Button button_bearbeiten;
 
     @FXML
-    Button button_stornieren;
+    private Button button_stornieren;
 
     @FXML
-    ImageView imageview_suchicon;
+    private ImageView imageview_suchicon;
 
+    //Damit die Daten aus der Datenbank in das passende Format konvertiert werden können
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     private static final SimpleDateFormat DE_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 
-
+    /**
+     * Sucht die Rechnungen zu der Kundennummer im Suchfeld
+     * @throws SQLException
+     */
     @FXML
     private void suchen() throws SQLException {
         listview_rechnungsbrowser.getItems().clear();
-        try (ResultSet rechungen = DBConnection.rechnungenSuchen(textfield_sucheingabe.getText())) {
+        try (ResultSet rechnungen = DBConnection.rechnungenSuchen(textfield_sucheingabe.getText())) {
             String ergStr = "";
-            while (rechungen.next()) {
-                ergStr = ergStr.concat(rechungen.getString("Rechnung_id"));
+            while (rechnungen.next()) {
+                ergStr = ergStr.concat(rechnungen.getString("Rechnung_id"));
                 listview_rechnungsbrowser.getItems().add(ergStr);
+                ergStr = "";
 
-                //ergStr = ergStr.concat("\n" + res.getString("PERSONAL_NR") + "\n");
             }
         }
 
     }
 
+    /**
+     * Lädt die Daten der ausgewählten Rechnung in die Informationsfelder
+     */
     @FXML
     public void rechungAuswaehlen() {
         try {
@@ -157,6 +153,13 @@ public class SampleController implements Initializable {
 
     }
 
+    /**
+     * Sammelt alle Daten der Rechnung und erstellt mit diesen eine PDF
+     * @throws URISyntaxException
+     * @throws DocumentException
+     * @throws IOException
+     * @throws SQLException
+     */
     @FXML
     private void toPDF() throws URISyntaxException, DocumentException, IOException, SQLException {
         List<String> data = Arrays.asList(
@@ -180,6 +183,9 @@ public class SampleController implements Initializable {
 
     }
 
+    /**
+     * Setzt den Status der ausgewählten Rechnung auf "storniert
+     */
     @FXML
     private void stornierenButton() {
         DBConnection.updateButtonStornieren(textfield_rechnungsnummer.getText());
