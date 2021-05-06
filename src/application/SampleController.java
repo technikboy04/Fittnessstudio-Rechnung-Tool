@@ -136,7 +136,6 @@ public class SampleController implements Initializable {
             @Override
             public void handle(javafx.event.ActionEvent event) {
 
-
                 Stage newStage = new Stage();
                 PopUpMain PopUp = new PopUpMain(textfield_sucheingabe.getText(), textfield_rechnungsnummer.getText(), tableview_rechnungspositionen.getItems());
                 try {
@@ -174,6 +173,7 @@ public class SampleController implements Initializable {
 
         Path dateipfadPath = Paths.get(Main.class.getResource("Rechnung.pdf").toURI());
 
+        //Setzt den Namen der PDF zusammen
         StringBuilder sb = new StringBuilder();
         sb.append(textfield_rechnungsnummer.getText() + "_");
         sb.append(textfield_datum.getText() + "_");
@@ -183,8 +183,9 @@ public class SampleController implements Initializable {
         new PDFErstellen().createPdf(dateipfadPath.toString(), data, tableview_rechnungspositionen.getItems(), sb.toString());
 
         alert.setTitle("Erfolgreich");
-        alert.setHeaderText("Die PDF wurde erfolgreich erstellt!");
-        alert.setContentText("Die PDF " + sb.toString() + ".pdf wurde erfolgreich erstellt!");
+        alert.setHeaderText("Die PDF " + sb.toString() + ".pdf wurde erfolgreich erstellt!");
+        Path path = Paths.get(sb.toString() + ".pdf");
+        alert.setContentText("PDF gespeichert unter " + path.toAbsolutePath());
         alert.showAndWait();
 
     }

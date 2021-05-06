@@ -55,7 +55,6 @@ public class DBConnection {
      */
     public static ResultSet dbExecuteCommand(String command) {
 
-
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
 
