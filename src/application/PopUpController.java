@@ -156,9 +156,16 @@ public class PopUpController implements Initializable {
         }
     }
 
+    /**
+     * Löscht die ausgewählte Rechnungsposition
+     */
     @FXML
-    private void loescheRechnungsposition(){
-
+    private void loescheRechnungsposition() throws SQLException {
+        Rechnungsposition rechnungsposition = (Rechnungsposition) tableview_rechnungspositionen.getSelectionModel().getSelectedItem();
+        DBConnection.deleteRechnungsposition(textfield_rechnungsnummer.getText(), rechnungsposition.getProduktname());
+        textfield_anzahl.setText(null);
+        choicebox_produkte.setValue(null);
+        fillTableview();
     }
 
 

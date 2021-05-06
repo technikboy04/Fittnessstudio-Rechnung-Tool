@@ -1,5 +1,7 @@
 package application;
 
+import javafx.scene.control.Alert;
+
 import java.sql.*;
 
 public class DBConnection {
@@ -98,7 +100,11 @@ public class DBConnection {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fehler");
+            alert.setHeaderText("Der Eintrag ist schon vorhanden!");
+            alert.setContentText("Das Produkt ist schon vorhanden lösche den Eintrag oder ändere die Anzahl");
+            alert.showAndWait();
         }
 
     }
@@ -227,10 +233,10 @@ public class DBConnection {
     }
 
 
-    /**SQL Quarry zum löschen von Rechnungspositionen in der Datenabnk
-     *
-     * @param rechnung_id
-     * @param produktname
+    /**
+     * SQL Quarry zum löschen von Rechnungspositionen in der Datenabnk
+     * @param rechnung_id Rechnungsnummer
+     * @param produktname Produktname
      */
     public static void deleteRechnungsposition(String rechnung_id, String produktname){
        String command =  "DELETE FROM FS192_ltroesch.RECHNUNG_PRODUKTKATALOG WHERE RECHNUNG_ID LIKE '" + rechnung_id + "' AND PRODUKT_ID LIKE (SELECT PRODUKT_ID FROM FS192_LTROESCH.PRODUKTKATALOG WHERE PRODUKTNAME LIKE '" + produktname + "')" ;
