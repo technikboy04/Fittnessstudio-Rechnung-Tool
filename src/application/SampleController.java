@@ -71,6 +71,8 @@ public class SampleController implements Initializable {
     @FXML
     private ImageView imageview_suchicon;
 
+    private Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
     //Damit die Daten aus der Datenbank in das passende Format konvertiert werden können
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     private static final SimpleDateFormat DE_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
@@ -150,7 +152,6 @@ public class SampleController implements Initializable {
         column_anzahl.setCellValueFactory(new PropertyValueFactory<Rechnungsposition, String>("anzahl"));
         column_preis.setCellValueFactory(new PropertyValueFactory<Rechnungsposition, String>("preis"));
 
-
     }
 
     /**
@@ -180,6 +181,11 @@ public class SampleController implements Initializable {
         res.next();
         sb.append(res.getString("Nachname"));
         new PDFErstellen().createPdf(dateipfadPath.toString(), data, tableview_rechnungspositionen.getItems(), sb.toString());
+
+        alert.setTitle("Erfolgreich");
+        alert.setHeaderText("Die PDF wurde erfolgreich erstellt!");
+        alert.setContentText("Die PDF " + sb.toString() + ".pdf wurde erfolgreich erstellt!");
+        alert.showAndWait();
 
     }
 
