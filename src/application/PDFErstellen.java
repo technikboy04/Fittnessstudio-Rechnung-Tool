@@ -1,10 +1,7 @@
 package application;
 
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.AcroFields;
-import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import javafx.collections.ObservableList;
@@ -12,10 +9,7 @@ import javafx.collections.ObservableList;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 public class PDFErstellen {
@@ -24,14 +18,25 @@ public class PDFErstellen {
     public PDFErstellen() throws URISyntaxException {
     }
 
+    /**
+     * Erstellt eine PDF mit den übergebenen Rechnungsdaten in die PDF-Vorlage
+     *
+     * @param filename            PDF-Vorlage, welche befüllt werden soll
+     * @param rechnungsDaten      Benötigeten Rechnungsdate, welche in die PDF geschriben werden sollen
+     * @param rechnungspositionen Rechnungspositionen
+     * @param rechnungsPfad       Dateipfad, an dem die PDF gespeichert werden soll
+     * @throws DocumentException
+     * @throws IOException
+     * @throws URISyntaxException
+     */
     public void createPdf(String filename, List rechnungsDaten, ObservableList rechnungspositionen, String rechnungsPfad) throws DocumentException,
             IOException, URISyntaxException {
         PdfReader pdfTemplate = new PdfReader(filename);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PdfStamper stamper = new PdfStamper(pdfTemplate, out);
         AcroFields form = stamper.getAcroFields();
-        //stamper.getAcroFields().setField("testFeld   ", "21.09.1999");
 
+        // Befüllt die Felder der PDF
         form.setField("tpKdNum", (String) rechnungsDaten.get(0));
         form.setField("tpDatum", (String) rechnungsDaten.get(1));
         form.setField("tpReNum", (String) rechnungsDaten.get(2));
@@ -49,30 +54,14 @@ public class PDFErstellen {
         }
         form.setField("tbRePos", sb.toString());
 
-
         stamper.close();
 
-
-        // Path dateipfadPath = Paths.get(Main.class.getResource("testausgefüllt.pdf").toURI());
-        //String dateipfad = dateipfadPath.toString();
-
-
-        FileOutputStream fos = new FileOutputStream(rechnungsPfad+".pdf");
+        FileOutputStream fos = new FileOutputStream(rechnungsPfad + ".pdf");
 
         out.writeTo(fos);
         fos.close();
         pdfTemplate.close();
 
-
     }
-
-    public void setImage(PdfContentByte cb, String imgPath, float scalePercent)
-            throws MalformedURLException, IOException, DocumentException {
-        Image img = Image.getInstance(imgPath);
-        img.scalePercent(scalePercent);
-        img.setAbsolutePosition(cb.getXTLM(), cb.getYTLM());
-        cb.addImage(img);
-    }
-
 
 }

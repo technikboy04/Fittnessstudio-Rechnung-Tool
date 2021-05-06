@@ -3,13 +3,10 @@ package application;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 
 public class PopUpMain extends Application {
 
@@ -17,11 +14,12 @@ public class PopUpMain extends Application {
     private static String rechnungsnummer;
     private static ObservableList list;
 
-    public PopUpMain(String kundennummer, String rechnungsnummer, ObservableList list){
+    public PopUpMain(String kundennummer, String rechnungsnummer, ObservableList list) {
         PopUpMain.list = list;
         PopUpMain.setKundennummer(kundennummer);
         PopUpMain.setRechnungsnummer(rechnungsnummer);
     }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
 
@@ -30,10 +28,11 @@ public class PopUpMain extends Application {
         primaryStage.setHeight(730);
         primaryStage.setWidth(550);
         primaryStage.setTitle("Rechnung bearbeiten");
-        primaryStage.setOnCloseRequest(event -> Main.controller.rechnungAktualisieren());
+        primaryStage.setOnCloseRequest(event -> Main.controller.rechungAuswaehlen());
         primaryStage.show();
     }
 
+    //Getter und Setter
     public static String getKundennummer() {
         return kundennummer;
     }

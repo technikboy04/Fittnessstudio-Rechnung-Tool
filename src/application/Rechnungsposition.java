@@ -2,6 +2,10 @@ package application;
 
 import javafx.beans.property.SimpleStringProperty;
 
+/**
+ * Klasse, um die Daten in die TableView zu packen
+ * Speichert nur den Produktnamen, die Anzahl und den Preis
+ */
 public class Rechnungsposition {
 
     private SimpleStringProperty produktname;
