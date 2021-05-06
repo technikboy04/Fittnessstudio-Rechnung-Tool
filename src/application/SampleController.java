@@ -91,6 +91,8 @@ public class SampleController implements Initializable {
             while (rechungen.next()) {
                 ergStr = ergStr.concat(rechungen.getString("Rechnung_id"));
                 listview_rechnungsbrowser.getItems().add(ergStr);
+                ergStr ="";
+
 
                 //ergStr = ergStr.concat("\n" + res.getString("PERSONAL_NR") + "\n");
             }
