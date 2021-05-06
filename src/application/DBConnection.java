@@ -234,5 +234,6 @@ public class DBConnection {
      */
     public static void deleteRechnungsposition(String rechnung_id, String produktname){
        String command =  "DELETE FROM FS192_ltroesch.RECHNUNG_PRODUKTKATALOG WHERE RECHNUNG_ID LIKE '" + rechnung_id + "' AND PRODUKT_ID LIKE (SELECT PRODUKT_ID FROM FS192_LTROESCH.PRODUKTKATALOG WHERE PRODUKTNAME LIKE '" + produktname + "')" ;
+        dbExecuteUpdate(command);
     }
 }
