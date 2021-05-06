@@ -102,8 +102,8 @@ public class DBConnection {
         } catch (SQLException throwables) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
-            alert.setHeaderText("Der Eintrag ist schon vorhanden!");
-            alert.setContentText("Das Produkt ist schon vorhanden lösche den Eintrag oder ändere die Anzahl");
+            alert.setHeaderText("Fehlerhafter Eintrag oder Eintrag schon vorhanden!");
+            alert.setContentText("Das Produkt ist entweder schon vorhanden oder es wurde eine ungültige Eingabe getätigt!");
             alert.showAndWait();
         }
 
